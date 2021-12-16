@@ -7,13 +7,13 @@
 #include <vector>
 using namespace std;
 
-// Library DataBase Functions
-	// Prototype functions are declared here
+// Prototype functions are declared here
+void TableHeader();
 void DBsearch(); // AbdoAymen
 void DBdisplay(); // AbuBakr
 void DBadd(); // Bodz the following is yours 
 void DBdelete(); 
-void DBupdate(); 
+void DBupdate();
 
 int main() {
 	// Vectors containing all the info on the books 
@@ -50,7 +50,7 @@ int main() {
 		cout << " Choice: ";
 		cin >> choice;
 	}
-
+	TableHeader();
 	switch (choice) {
 	case 1:
 		DBsearch();
@@ -70,6 +70,11 @@ int main() {
 	}
 }
 
+void TableHeader() {
+	cout << "\n=====================================================================================\n";
+	cout << "         Title         |     Author     |  Genre  | Year | Pages | Publisher ";
+	cout << "\n-----------------------+----------------+---------+------+-------+-------------------\n";
+}
 void DBsearch() {
 
 }
