@@ -1,39 +1,52 @@
 // CSE014 Group project that's worth 25% of our grade
-// Everyone is assigned a Function to complete 
-// and everyone is responsible for their code's analysis (flow chart and algorithim)
-
 // Basic Libraies used, ADD more if used here
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 using namespace std;
 
-// Library Database (hence the DB) Functions
+// Library DataBase Functions
 	// Prototype functions are declared here
 void DBsearch(); // AbdoAymen
 void DBdisplay(); // AbuBakr
 void DBadd(); // Bodz the following is yours 
-void DBdelete();	// The following are really similiar 
-void DBupdate();	// But I'll be mostly helping you with them 
+void DBdelete(); 
+void DBupdate(); 
 
 // Vectors containing all the info on the books 
-vector<int> BOOKID; 
-	// BOOKID is used Internally only
-	// Is used alongside with the index number which is how we're gonna find the following
-vector<string> TITLE, AUTHOR, GENRE, PUBLISHER; // These are what I find neccessary,
-vector<int> ISBN /*13 Standard*/, YEAR /*of publishing*/, PAGES;
+vector<int> BOOKID; 	// BOOKID is used Internally only
+vector<string> TITLE, AUTHOR, GENRE, PUBLISHER, ISBN /*13 Standard*/;
+vector<int> YEAR /*of publishing*/, PAGES;
+
+	/* Typical Structure of File
+	* BOOKID
+	* AUTHOR
+	* ISBN
+	* GENRE
+	* PUBLISHER
+	* YEAR 
+	* PAGES
+	*/
 
 int main() {
 	// Before the rest of the code executes all the information is initialized from a textfile 
+
 	fstream iofs("BookData.txt"); // Reads from this file 
-	string bookID, title, author, isbn, genre, publisher, year, pages;
-	// string GatheringData[8] = { bookID, title, author, isbn, genre, publisher, year, pages };
+	int atLine = 1;
 	for (string LineRead; getline(iofs, LineRead);) {
-		/* Processes of reading the line converted to local variableand push.backing to vectors
-		Each Book has 8 lines dedicated to them 
-		with a empty line seperating them */
-		// ((LineRead & 9)==0; then skip line and )
+		if ((atLine % 9) == 1) { BOOKID.push_back(stoi(LineRead)); }
+		if ((atLine % 9) == 2) { TITLE.push_back(LineRead); }
+		if ((atLine % 9) == 3) { AUTHOR.push_back(LineRead); }
+		if ((atLine % 9) == 4) { ISBN.push_back(LineRead); }
+		if ((atLine % 9) == 5) { GENRE.push_back(LineRead); }
+		if ((atLine % 9) == 6) { PUBLISHER.push_back(LineRead); }
+		if ((atLine % 9) == 7) { YEAR.push_back(stoi(LineRead)); }
+		if ((atLine % 9) == 8) { PAGES.push_back(stoi(LineRead)); }
+
+		cout << LineRead << endl; // DEBUG
+		atLine++; // DEBUG
 	}
 
 	// Displays all Starting choices 
