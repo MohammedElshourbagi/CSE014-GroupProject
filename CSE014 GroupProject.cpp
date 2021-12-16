@@ -20,7 +20,7 @@ vector<int> BOOKID; 	// BOOKID is used Internally only
 vector<string> TITLE, AUTHOR, GENRE, PUBLISHER, ISBN /*13 Standard*/;
 vector<int> YEAR /*of publishing*/, PAGES;
 
-	/* Typical Structure of File
+	/* Typical Structure of Data
 	* BOOKID
 	* AUTHOR
 	* ISBN
