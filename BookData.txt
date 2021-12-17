@@ -1,5 +1,0 @@
-00000001|Calculus: Early Transcendentals|James Stewart|0000000000001|Textbook|Cengage Learning|2020|1421
-00000002|Harry Potter and the Philosopher's Stone|J.K. Rowling|0000000000002|Fantasy|Bloomsbury|1997|223
-00000003|Harry Potter and the Chamber of Secrets|J.K. Rowling|0000000000003|Fantasy|Bloomsbury|1998|251
-00000004|Harry Potter and the Prisoner of Azkaban|J.K. Rowling|0000000000004|Fantasy|Bloomsbury|1999|317
-00000005|Harry Potter and the Goblet of Fire|J.K. Rowling|0000000000005|Fantasy|Bloomsbury|2000|636
