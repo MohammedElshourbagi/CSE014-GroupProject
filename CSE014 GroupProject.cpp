@@ -10,6 +10,7 @@ using namespace std;
 
 // Prototype functions are declared here
 void TableHeader();
+void TableEnd();
 void DBsearch(); // AbdoAymen
 void DBdisplay(); // AbuBakr
 void DBadd(); // Bodz the following is yours 
@@ -73,6 +74,7 @@ int main() {
 	case 2:
 		TableHeader();
 		DBdisplay(); // This function diplays all the information stored in the vectors
+		TableEnd();
 		break;
 	case 3:
 		DBadd();
@@ -102,6 +104,9 @@ void TableHeader() {
 	cout << "\n=====================================================================================\n";
 	cout << "         Title         |     Author     |  Genre  | Year | Pages | Publisher ";
 	cout << "\n-----------------------+----------------+---------+------+-------+-------------------\n";
+}
+void TableEnd() {
+	cout << "\n=====================================================================================\n";
 }
 void DBsearch() {
 
