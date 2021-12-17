@@ -79,27 +79,30 @@ int main() {
 		break;
 	case 3:
 		DBadd();
-		NeedSave = 1;
+		// NeedSave = 1; DONT ACTIVATE THIS CODE
 		break;
 	case 4:
 		DBdelete();
-		NeedSave = 1;
+		// NeedSave = 1; DONT ACTIVATE THIS CODE
 		break;
 	case 5:
 		DBupdate();
-		NeedSave = 1;
+		// NeedSave = 1; DONT ACTIVATE THIS CODE
 		break;
 	}
+	
 	// Saving changes made to the file
 	if (NeedSave == 1) {
-		ofstream os("BookData.txt"/*, ios::out | ios::trunc*/);
+		ofstream os("BookData.txt", ios::out | ios::trunc);
 		if (os.is_open()) {
-			for (int i = 0; ( i <= AmountOfBooks); i++) {
-				// still figuring out a way 
+			for (int i = 0; (i <= AmountOfBooks); i++) {
+				string aggregatedline = BOOKID.at(i) + "|" + TITLE.at(i) + "|" + AUTHOR.at(i) + "|" + GENRE.at(i) + "|" + PUBLISHER.at(i) + "|" + ISBN.at(i) + "|" + YEAR.at(i) + "|" + PAGES.at(i);
+				os << aggregatedline << endl;;
 			}
 		} else { cout << "\n ERROR: Something went wrong with opening the file.\n"; }
 	}
 }
+
 
 void TableHeader() {
 	cout << "\n=====================================================================================";
