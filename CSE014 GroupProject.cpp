@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <algorithm>
 #include <vector>
 using namespace std;
 
@@ -22,17 +23,25 @@ int main() {
 	// This allows us to manipulate the data more easily
 	fstream iofs("BookData.txt"); 
 	int atLine = 1;
-	for (string LineRead; getline(iofs, LineRead);) {
-		if ((atLine % 9) == 1) { BOOKID.push_back(LineRead); }
-		if ((atLine % 9) == 2) { TITLE.push_back(LineRead); }
-		if ((atLine % 9) == 3) { AUTHOR.push_back(LineRead); }
-		if ((atLine % 9) == 4) { ISBN.push_back(LineRead); }
-		if ((atLine % 9) == 5) { GENRE.push_back(LineRead); }
-		if ((atLine % 9) == 6) { PUBLISHER.push_back(LineRead); }
-		if ((atLine % 9) == 7) { YEAR.push_back(LineRead); }
-		if ((atLine % 9) == 8) { PAGES.push_back(LineRead); }
+	if (iofs.is_open()) {
+		for (string LineRead; getline(iofs, LineRead);) {
+			stringstream unprocessedLine(LineRead);
+			string segment;
+			int segmentposition = 1;
+			while (getline(unprocessedLine, segment, '|')) {
+				if (segmentposition == 1) { BOOKID.push_back(segment); }
+				if (segmentposition == 2) { TITLE.push_back(segment); }
+				if (segmentposition == 3) { AUTHOR.push_back(segment); }
+				if (segmentposition == 4) { GENRE.push_back(segment); }
+				if (segmentposition == 5) { PUBLISHER.push_back(segment); }
+				if (segmentposition == 6) { ISBN.push_back(segment); }
+				if (segmentposition == 7) { YEAR.push_back(segment); }
+				if (segmentposition == 8) { PAGES.push_back(segment); }
+				segmentposition++;
+			}
+		}
 	}
-	cout << " This is program manages and maintain a database of books in a library.\n";
+	cout << "\n This is program manages and maintain a database of books in a library.\n";
 	// Displays all Starting choices 
 	cout << " Select by entering the corresponding numbers:\n";
 	cout << "\n\t 1.) Search \n";
@@ -50,13 +59,17 @@ int main() {
 		cout << " Choice: ";
 		cin >> choice;
 	}
-	TableHeader();
 	switch (choice) {
 	case 1:
-		DBsearch();
+		// This is a query 
+			// Display a search fields 
+			// Ask for the search term
+		DBsearch(); // This function should be givin a vectorName, searchTerm 
+			// output all books that have the search term in the right field
 		break;
 	case 2:
-		DBdisplay();
+		TableHeader();
+		DBdisplay(); // This function diplays all the information stored in the vectors
 		break;
 	case 3:
 		DBadd();
@@ -68,6 +81,8 @@ int main() {
 		DBupdate();
 		break;
 	}
+
+	// Saving changes made to the file
 }
 
 void TableHeader() {
