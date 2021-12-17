@@ -70,7 +70,9 @@ int main() {
 			// Display a search fields 
 			// Ask for the search term
 		DBsearch(); // This function should be givin a vectorName, searchTerm 
-			// output all books that have the search term in the right field
+		TableHeader();
+		// output all books that have the search term in the right field
+		TableEnd();
 		break;
 	case 2:
 		TableHeader();
