@@ -38,11 +38,12 @@ int main() {
 				if (segmentposition == 6) { ISBN.push_back(segment); }
 				if (segmentposition == 7) { YEAR.push_back(segment); }
 				if (segmentposition == 8) { PAGES.push_back(segment); }
+				if (segmentposition >= 9) { cout << "\n ERROR: Improper Data Format.\n"; }
 				segmentposition++;
 			}
 			AmountOfBooks++;
 		}
-	} else { cout << "ERROR: Something went wrong with openining the file"; }
+	} else { cout << "\n ERROR: Something went wrong with openining the file\n"; }
 	bool NeedSave = 0; // Did the content of file change?, if it did then save
 
 	cout << "\n This is program manages and maintain a database of books in a library.\n";
@@ -96,18 +97,19 @@ int main() {
 			for (int i = 0; ( i <= AmountOfBooks); i++) {
 				// still figuring out a way 
 			}
-		} else { cout << "ERROR: Something went wrong with opening the file"; }
+		} else { cout << "\n ERROR: Something went wrong with opening the file.\n"; }
 	}
 }
 
 void TableHeader() {
-	cout << "\n=====================================================================================\n";
-	cout << "         Title         |     Author     |  Genre  | Year | Pages | Publisher ";
+	cout << "\n=====================================================================================";
+	cout << "\n         Title         |     Author     |  Genre  | Year | Pages | Publisher ";
 	cout << "\n-----------------------+----------------+---------+------+-------+-------------------\n";
 }
 void TableEnd() {
 	cout << "\n=====================================================================================\n";
 }
+
 void DBsearch() {
 
 }
