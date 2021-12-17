@@ -21,11 +21,11 @@ int main() {
 	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, ISBN, YEAR, PAGES;
 	// All data stored in text file is assinged to the vectors used in the program
 	// This allows us to manipulate the data more easily
-	fstream iofs("BookData.txt"); 
-	int atLine = 1;
-	if (iofs.is_open()) {
-		for (string LineRead; getline(iofs, LineRead);) {
-			stringstream unprocessedLine(LineRead);
+	fstream ifs("BookData.txt"); 
+	int AmountOfBooks = 1;
+	if (ifs.is_open()) {
+		for (string atLineRead; getline(ifs, atLineRead);) {
+			stringstream unprocessedLine(atLineRead);
 			string segment;
 			int segmentposition = 1;
 			while (getline(unprocessedLine, segment, '|')) {
@@ -39,8 +39,11 @@ int main() {
 				if (segmentposition == 8) { PAGES.push_back(segment); }
 				segmentposition++;
 			}
+			AmountOfBooks++;
 		}
-	}
+	} else { cout << "ERROR: Something went wrong with openining the file"; }
+	bool NeedSave = 0; // Did the content of file change?, if it did then save
+
 	cout << "\n This is program manages and maintain a database of books in a library.\n";
 	// Displays all Starting choices 
 	cout << " Select by entering the corresponding numbers:\n";
@@ -73,16 +76,26 @@ int main() {
 		break;
 	case 3:
 		DBadd();
+		NeedSave = 1;
 		break;
 	case 4:
 		DBdelete();
+		NeedSave = 1;
 		break;
 	case 5:
 		DBupdate();
+		NeedSave = 1;
 		break;
 	}
-
 	// Saving changes made to the file
+	if (NeedSave == 1) {
+		ofstream os("BookData.txt"/*, ios::out | ios::trunc*/);
+		if (os.is_open()) {
+			for (int i = 0; ( i <= AmountOfBooks); i++) {
+				// still figuring out a way 
+			}
+		} else { cout << "ERROR: Something went wrong with opening the file"; }
+	}
 }
 
 void TableHeader() {
