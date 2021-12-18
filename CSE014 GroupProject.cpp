@@ -98,12 +98,13 @@ int main() {
 	if (NeedSave == 1) {
 		ofstream os("BookData.txt", ios::out | ios::trunc);
 		if (os.is_open()) {
-			for (int i = 0; (i <= AmountOfBooks); ++i) {
-				string part1 = BOOKID.at(i) + "|" + TITLE.at(i) + "|" + AUTHOR.at(i) + "|";
-				string part2 = GENRE.at(i) + "|" + PUBLISHER.at(i) + "|" + ISBN.at(i) + "|";
-				string part3 = YEAR.at(i) + "|" + PAGES.at(i) + "|" + PRICE.at(i);
-				string aggregatedline = part1 + part2 + part3;
-				os << aggregatedline << endl;;
+			string part1, part2, part3, aggregated;
+			for (int i = 0; i <= (AmountOfBooks - 1); i++) {
+				part1 = BOOKID.at(i) + "|" + TITLE.at(i) + "|" + AUTHOR.at(i) + "|";
+				part2 = GENRE.at(i) + "|" + PUBLISHER.at(i) + "|" + ISBN.at(i) + "|";
+				part3 = YEAR.at(i) + "|" + PAGES.at(i) + "|" + PRICE.at(i);
+				aggregated = part1.append(part2.append(part3));
+				os << aggregated << endl;
 			}
 		} else { cout << "\n ERROR: Something went wrong with opening the file.\n"; }
 	}
