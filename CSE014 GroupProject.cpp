@@ -19,7 +19,7 @@ void DBupdate();
 
 int main() {
 	// Vectors containing all the info on the books 
-	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, ISBN, YEAR, PAGES;
+	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, ISBN, YEAR, PAGES, PRICE;
 	// All data stored in text file is assinged to the vectors used in the program
 	// This allows us to manipulate the data more easily
 	fstream ifs("BookData.txt"); 
@@ -28,18 +28,19 @@ int main() {
 		for (string atLineRead; getline(ifs, atLineRead);) {
 			stringstream unprocessedLine(atLineRead);
 			string segment;
-			int segmentposition = 1;
+			int position = 1;
 			while (getline(unprocessedLine, segment, '|')) {
-				if (segmentposition == 1) { BOOKID.push_back(segment); }
-				if (segmentposition == 2) { TITLE.push_back(segment); }
-				if (segmentposition == 3) { AUTHOR.push_back(segment); }
-				if (segmentposition == 4) { GENRE.push_back(segment); }
-				if (segmentposition == 5) { PUBLISHER.push_back(segment); }
-				if (segmentposition == 6) { ISBN.push_back(segment); }
-				if (segmentposition == 7) { YEAR.push_back(segment); }
-				if (segmentposition == 8) { PAGES.push_back(segment); }
-				if (segmentposition >= 9) { cout << "\n ERROR: Improper Data Format.\n"; }
-				segmentposition++;
+				if (position == 1) { BOOKID.push_back(segment); }
+				if (position == 2) { TITLE.push_back(segment); }
+				if (position == 3) { AUTHOR.push_back(segment); }
+				if (position == 4) { GENRE.push_back(segment); }
+				if (position == 5) { PUBLISHER.push_back(segment); }
+				if (position == 6) { ISBN.push_back(segment); }
+				if (position == 7) { YEAR.push_back(segment); }
+				if (position == 8) { PAGES.push_back(segment); }
+				if (position == 9) { PRICE.push_back(segment); }
+				if (position >= 10) { cout << "\n ERROR: Improper Data Format.\n"; }
+				position++;
 			}
 			AmountOfBooks++;
 		}
@@ -81,15 +82,15 @@ int main() {
 		break;
 	case 3:
 		DBadd();
-		// NeedSave = 1; DONT ACTIVATE THIS CODE
+		NeedSave = 1;
 		break;
 	case 4:
 		DBdelete();
-		// NeedSave = 1; DONT ACTIVATE THIS CODE
+		NeedSave = 1;
 		break;
 	case 5:
 		DBupdate();
-		// NeedSave = 1; DONT ACTIVATE THIS CODE
+		NeedSave = 1;
 		break;
 	}
 	
@@ -97,8 +98,11 @@ int main() {
 	if (NeedSave == 1) {
 		ofstream os("BookData.txt", ios::out | ios::trunc);
 		if (os.is_open()) {
-			for (int i = 0; (i <= AmountOfBooks); i++) {
-				string aggregatedline = BOOKID.at(i) + "|" + TITLE.at(i) + "|" + AUTHOR.at(i) + "|" + GENRE.at(i) + "|" + PUBLISHER.at(i) + "|" + ISBN.at(i) + "|" + YEAR.at(i) + "|" + PAGES.at(i);
+			for (int i = 0; (i <= AmountOfBooks); ++i) {
+				string part1 = BOOKID.at(i) + "|" + TITLE.at(i) + "|" + AUTHOR.at(i) + "|";
+				string part2 = GENRE.at(i) + "|" + PUBLISHER.at(i) + "|" + ISBN.at(i) + "|";
+				string part3 = YEAR.at(i) + "|" + PAGES.at(i) + "|" + PRICE.at(i);
+				string aggregatedline = part1 + part2 + part3;
 				os << aggregatedline << endl;;
 			}
 		} else { cout << "\n ERROR: Something went wrong with opening the file.\n"; }
