@@ -23,7 +23,7 @@ int main() {
 	// All data stored in text file is assinged to the vectors used in the program
 	// This allows us to manipulate the data more easily
 	fstream ifs("BookData.txt"); 
-	int AmountOfBooks = 1;
+	int AmountOfBooks = 0;
 	if (ifs.is_open()) {
 		for (string atLineRead; getline(ifs, atLineRead);) {
 			stringstream unprocessedLine(atLineRead);
