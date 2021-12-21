@@ -11,13 +11,15 @@ using namespace std;
 // Prototype functions are declared here
 void TableHeader();
 void TableEnd();
-char PerformAnotherOperation();
+vector<int> searchWithinFunction(vector<string> vectorname);
 
 int main() {
 	cout << " This is program manages and maintain a database of books in a library.";
 
 	int AmountOfBooks = 0;
-	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN; 	// Vectors containing all the info on the books 
+	// Vectors containing all the info on the books 
+	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN;
+	vector<int> IndexOfSearchedTerm; // Used in Query 
 	// All data stored in text file is assinged to the vectors used in the program
 	// This allows us to manipulate the data more easily
 	fstream ifs("BookData.txt"); 
@@ -104,14 +106,19 @@ int main() {
 		}
 		switch (querychoice) {
 		case 1: // Checks the TITLE vector if it contains the search term 
+			searchWithinFunction(TITLE);
 			break;
-		case 2: // Checks the AUTHOR vector if it contains the search term  
+		case 2: // Checks the AUTHOR vector if it contains the search term 
+			searchWithinFunction(AUTHOR);
 			break;
 		case 3: // Checks the GENRE vector if it contains the search term
+			searchWithinFunction(GENRE);
 			break;
 		case 4: // Checks the Publisher vector if it contains the search term
+			searchWithinFunction(PUBLISHER);
 			break;
 		case 5: // Display a small MENU with a price range
+			break;
 		}
 
 		TableHeader();
@@ -178,4 +185,21 @@ void TableHeader() {
 }
 void TableEnd() {
 	cout << "\n===================================================================================================================\n";
+}
+vector<int> searchWithinFunction(vector<string> vectorname) {
+	vector<int> IndexOfSearchedTerm;
+	vector<string>::iterator iter;
+	
+	string SearchTerm;
+	cout << " Type the term you want to search for: ";
+	cin >> SearchTerm;
+
+	int i = 0;
+	for (iter = vectorname.begin(); iter != vectorname.end(); ++iter) {
+		if (vectorname.at(i) == SearchTerm) {
+			IndexOfSearchedTerm.push_back(i);
+		}
+		i++;
+	}
+	return IndexOfSearchedTerm;
 }
