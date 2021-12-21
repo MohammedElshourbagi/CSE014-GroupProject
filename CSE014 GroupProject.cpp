@@ -11,12 +11,15 @@ using namespace std;
 // Prototype functions are declared here
 void TableHeader();
 void TableEnd();
+vector<int> searchWithinFunction(vector<string> vectorname);
 
 int main() {
 	cout << " This is program manages and maintain a database of books in a library.";
 
 	int AmountOfBooks = 0;
-	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN; 	// Vectors containing all the info on the books 
+	// Vectors containing all the info on the books 
+	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN;
+	vector<int> IndexOfSearchedTerm; // Used in Query 
 	// All data stored in text file is assinged to the vectors used in the program
 	// This allows us to manipulate the data more easily
 	fstream ifs("BookData.txt"); 
@@ -54,7 +57,7 @@ int main() {
 		cin >> PassodeEntered;
 		if (PassodeEntered == Passcode) { isAdmin = 1;
 		} else {
-			int Attempts = 2;
+			int Attempts = 3;
 			while ((PassodeEntered != Passcode) && (Attempts > 0)){
 				cout << " Incorrect Password: You have " << Attempts << " arrempts left = ";
 				cin >> PassodeEntered;
@@ -73,57 +76,48 @@ int main() {
 		cout << "\n\t 5.) Update \n"; 
 		cout << "\n\t 6.) Organize Sale \n"; }
 
-	int choice = 0;
+	int choice = 0, ChoiceUpperBound[2] = {2,6}, UpperBound;
+	if (isAdmin == 1) { UpperBound = 1; } else { UpperBound = 0; }
 	cout << "\n Choice: ";
 	cin >> choice;
-	if (isAdmin == 1) {
-		while ((choice <= 0) || (choice > 6)) {
-			cout << " ***INVALID INPUT***\n";
-			cout << " Try Again: number must be between 1 to 6 \n";
-			cout << " Choice: ";
-			cin >> choice;
-		}
-	} else {
-		while ((choice <= 0) || (choice > 2)) {
-			cout << " ***INVALID INPUT***\n";
-			cout << " Try Again: number must be between 1 to 2 \n";
-			cout << " Choice: ";
-			cin >> choice;
-		}
+	while ((choice <= 0) || (choice > ChoiceUpperBound[UpperBound])) {
+		cout << " ***INVALID INPUT***\n";
+		cout << " Try Again: number must be between 1 to " << ChoiceUpperBound[UpperBound];
+		cout << " \n Choice: ";
+		cin >> choice;
 	}
-	
+
 	switch (choice) {
-	case 1: 
+	case 1: // QUERY
 		int querychoice;
-		cout << "\n select by entring the corresponding number :\n";
-		cout << "\n 1: Search by Title \n";
-		cout << "\n 2: Search by Auther \n";
-		cout << "\n 3: Search by Genre \n";
-		cout << "\n 4: Search by Year \n";
-		cout << "\n 5: Search by Pages \n";
-		cout << "\n 6: Search by Publisher \n";
-		cout << "\n 7: Search by Price \n";
+		cout << "\n Select by entring the corresponding number :\n";
+		cout << "\n\t 1: Search by Title \n";
+		cout << "\n\t 2: Search by Author \n";
+		cout << "\n\t 3: Search by Genre \n";
+		cout << "\n\t 4: Search by Publisher \n";
+		cout << "\n\t 5: Search by Price \n";
+		cout << " Choice: ";
 		cin >> querychoice;
-		while ((querychoice <=0)||(querychoice>7)) {
-			cout << "INVALID INPUT\n";
-			cout << "Try Again : number must be between 1 to 7 \n";
-			cout << "choice; ";
+		while ((querychoice <= 0) || (querychoice > 7)) {
+			cout << " ***INVALID INPUT***\n";
+			cout << " Try Again : number must be between 1 to 7 \n";
+			cout << " \n Choice; ";
 			cin >> querychoice;
 		}
 		switch (querychoice) {
-		case 1:
+		case 1: // Checks the TITLE vector if it contains the search term 
+			searchWithinFunction(TITLE);
 			break;
-		case 2:
+		case 2: // Checks the AUTHOR vector if it contains the search term 
+			searchWithinFunction(AUTHOR);
 			break;
-		case 3:
+		case 3: // Checks the GENRE vector if it contains the search term
+			searchWithinFunction(GENRE);
 			break;
-		case 4:
+		case 4: // Checks the Publisher vector if it contains the search term
+			searchWithinFunction(PUBLISHER);
 			break;
-		case 5:
-			break;
-		case 6:
-			break;
-		case 7:
+		case 5: // Display a small MENU with a price range
 			break;
 		}
 
@@ -191,4 +185,21 @@ void TableHeader() {
 }
 void TableEnd() {
 	cout << "\n===================================================================================================================\n";
+}
+vector<int> searchWithinFunction(vector<string> vectorname) {
+	vector<int> IndexOfSearchedTerm;
+	vector<string>::iterator iter;
+	
+	string SearchTerm;
+	cout << " Type the term you want to search for: ";
+	cin >> SearchTerm;
+
+	int i = 0;
+	for (iter = vectorname.begin(); iter != vectorname.end(); ++iter) {
+		if (vectorname.at(i) == SearchTerm) {
+			IndexOfSearchedTerm.push_back(i);
+		}
+		i++;
+	}
+	return IndexOfSearchedTerm;
 }
