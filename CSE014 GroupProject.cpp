@@ -118,7 +118,6 @@ int main() {
 		case 4: // Checks the Publisher vector if it contains the search term
 			break;
 		case 5: // Display a small MENU with a price range
-			break;
 		}
 
 		TableHeader();
