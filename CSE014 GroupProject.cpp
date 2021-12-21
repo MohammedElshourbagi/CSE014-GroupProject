@@ -1,11 +1,10 @@
 // CSE014 Group project that's worth 25% of our grade
-// Basic Libraies used, ADD more if used here
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
+#include <iostream>		
+#include <fstream>		
+#include <sstream>	    
+#include <string>		
 #include <algorithm>
-#include <vector>
+#include <vector>		
 using namespace std;
 
 // Prototype functions are declared here
@@ -19,7 +18,7 @@ void DBupdate();
 
 int main() {
 	// Vectors containing all the info on the books 
-	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, ISBN, YEAR, PAGES, PRICE;
+	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, ISBN, YEAR, PAGES, ORGPRICE;
 	// All data stored in text file is assinged to the vectors used in the program
 	// This allows us to manipulate the data more easily
 	fstream ifs("BookData.txt"); 
@@ -38,8 +37,8 @@ int main() {
 				if (position == 6) { ISBN.push_back(segment); }
 				if (position == 7) { YEAR.push_back(segment); }
 				if (position == 8) { PAGES.push_back(segment); }
-				if (position == 9) { PRICE.push_back(segment); }
-				if (position >= 10) { cout << "\n ERROR: Improper Data Format.\n"; }
+				if (position == 9) { ORGPRICE.push_back(segment); }
+				if ((position >= 10) || (position == 0)) { cout << "\n ERROR: Improper Data Format.\n"; }
 				position++;
 			}
 			AmountOfBooks++;
@@ -102,7 +101,7 @@ int main() {
 			for (int i = 0; i <= (AmountOfBooks - 1); i++) {
 				part1 = BOOKID.at(i) + "|" + TITLE.at(i) + "|" + AUTHOR.at(i) + "|";
 				part2 = GENRE.at(i) + "|" + PUBLISHER.at(i) + "|" + ISBN.at(i) + "|";
-				part3 = YEAR.at(i) + "|" + PAGES.at(i) + "|" + PRICE.at(i);
+				part3 = YEAR.at(i) + "|" + PAGES.at(i) + "|" + ORGPRICE.at(i);
 				aggregated = part1.append(part2.append(part3));
 				os << aggregated << endl;
 			}
@@ -112,12 +111,12 @@ int main() {
 
 
 void TableHeader() {
-	cout << "\n=====================================================================================";
-	cout << "\n         Title         |     Author     |  Genre  | Year | Pages | Publisher ";
-	cout << "\n-----------------------+----------------+---------+------+-------+-------------------\n";
+	cout << "\n========================================================================================================";
+	cout << "\n              Title               |     Author     |  Genre  | Year | Pages |    Publisher    | Price ";
+	cout << "\n----------------------------------+----------------+---------+------+-------+-----------------+---------\n";
 }
 void TableEnd() {
-	cout << "\n=====================================================================================\n";
+	cout << "\n========================================================================================================\n";
 }
 
 void DBsearch() {
