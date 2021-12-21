@@ -54,7 +54,7 @@ int main() {
 		cin >> PassodeEntered;
 		if (PassodeEntered == Passcode) { isAdmin = 1;
 		} else {
-			int Attempts = 2;
+			int Attempts = 3;
 			while ((PassodeEntered != Passcode) && (Attempts > 0)){
 				cout << " Incorrect Password: You have " << Attempts << " arrempts left = ";
 				cin >> PassodeEntered;
@@ -94,8 +94,33 @@ int main() {
 	
 	switch (choice) {
 	case 1: // QUERY
-		// Display a search fields 
-		// Ask for the search term
+		int querychoice;
+		cout << "\n select by entring the corresponding number :\n";
+		cout << "\n\t 1: Search by Title \n";
+		cout << "\n\t 2: Search by Author \n";
+		cout << "\n\t 3: Search by Genre \n";
+		cout << "\n\t 4: Search by Publisher \n";
+		cout << "\n\t 5: Search by Price \n";
+		cin >> querychoice;
+		while ((querychoice <= 0) || (querychoice > 7)) {
+			cout << "INVALID INPUT\n";
+			cout << "Try Again : number must be between 1 to 7 \n";
+			cout << "choice; ";
+			cin >> querychoice;
+		}
+		switch (querychoice) {
+		case 1: // Checks the TITLE vector if it contains the search term 
+			break;
+		case 2: // Checks the AUTHOR vector if it contains the search term  
+			break;
+		case 3: // Checks the GENRE vector if it contains the search term
+			break;
+		case 4: // Checks the Publisher vector if it contains the search term
+			break;
+		case 5: // Display a small MENU with a price range
+			break;
+		}
+
 		TableHeader();
 		// output all books that have the search term in the right field
 		TableEnd();
