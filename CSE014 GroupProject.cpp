@@ -105,7 +105,8 @@ int main() {
 			cin >> querychoice;
 		}
 		switch (querychoice) {
-		case 1: // Checks the TITLE vector if it contains the search term 
+		case 1: 
+
 			searchWithinFunction(TITLE);
 			break;
 		case 2: // Checks the AUTHOR vector if it contains the search term 
@@ -117,7 +118,40 @@ int main() {
 		case 4: // Checks the Publisher vector if it contains the search term
 			searchWithinFunction(PUBLISHER);
 			break;
-		case 5: // Display a small MENU with a price range
+		case 5: 
+			cout << "\n\t 1: Price between the range of 0 to 15\n";
+			cout << "\n\t 2: Price between the range of 16 to 35\n";
+			cout << "\n\t 3: Price between the range of 36 to 50\n";
+			cout << "\n\t 4: Price between the range of 51 to 75\n";
+			cout << "\n\t 5: Price between the range of 76 to 100\n";
+			cout << "\n\t 6: Price between the range of bigger than 100 \n";
+			int numberchoice;
+			cout << "Choice: ";
+			cin >> numberchoice;
+			while ((numberchoice <= 0)||(numberchoice >= 6)) {
+				cout << "***INVALID INPUT***\n";
+				cout << "Try Again : number must be between 1 to 6 \n";
+				cin >> numberchoice;
+			    }
+			switch (numberchoice)
+			{
+			case 1:
+
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+
+			}
+
+
 			break;
 		}
 
