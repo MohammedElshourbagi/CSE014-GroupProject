@@ -5,7 +5,7 @@
 #include <sstream>	    
 #include <string>		
 #include <algorithm>
-#include <vector>		
+#include <vector>	
 using namespace std;
 
 // Prototype functions are declared here
@@ -13,8 +13,10 @@ void TableHeader();
 void TableEnd();
 
 int main() {
+	cout << " This is program manages and maintain a database of books in a library.";
+
 	int AmountOfBooks = 0;
-	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, ISBN, YEAR, PAGES, ORGPRICE; 	// Vectors containing all the info on the books 
+	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN; 	// Vectors containing all the info on the books 
 	// All data stored in text file is assinged to the vectors used in the program
 	// This allows us to manipulate the data more easily
 	fstream ifs("BookData.txt"); 
@@ -32,8 +34,9 @@ int main() {
 				if (position == 6) { YEAR.push_back(segment); }
 				if (position == 7) { PAGES.push_back(segment); }
 				if (position == 8) { ORGPRICE.push_back(segment); }
-				if (position == 9) { ISBN.push_back(segment); }
-				if ((position >= 10) || (position == 0)) { cout << "\n ERROR: Improper Data Format.\n"; }
+				if (position == 9) { RETAILPRICE.push_back(segment); }
+				if (position == 10) { ISBN.push_back(segment); }
+				if ((position >= 11) || (position == 0)) { cout << "\n ERROR: Improper Data Format.\n"; }
 				position++;
 			}
 			AmountOfBooks++;
@@ -41,24 +44,54 @@ int main() {
 	} else { cout << "\n ERROR: Something went wrong with openining the file\n"; }
 	bool NeedSave = 0; // Did the content of file change?, if it did then save
 
-	cout << "\n This is program manages and maintain a database of books in a library.\n";
+	int PassodeEntered, Passcode = 123;
+	bool isAdmin = 0;
+	char RunAsAdmin;
+	cout << "\n Run Program as Administrator? (Y/N): ";
+	cin >> RunAsAdmin;
+	if (RunAsAdmin == 'Y') {
+		cout << " Enter Admins Code = ";
+		cin >> PassodeEntered;
+		if (PassodeEntered == Passcode) { isAdmin = 1;
+		} else {
+			int Attempts = 2;
+			while ((PassodeEntered != Passcode) && (Attempts > 0)){
+				cout << " Incorrect Password: You have " << Attempts << " arrempts left = ";
+				cin >> PassodeEntered;
+				Attempts--; }
+			if (Attempts == 0) { cout << "\n Program will run with standard functions only\n"; }
+		}
+	} else { cout << "\n Program will run with standard functions only\n"; }
+	
 	// Displays all Starting choices 
-	cout << " Select by entering the corresponding numbers:\n";
+	cout << "\n Select by entering the corresponding numbers:\n";
 	cout << "\n\t 1.) Search \n";
 	cout << "\n\t 2.) Display \n";
-	cout << "\n\t 3.) Add \n";
-	cout << "\n\t 4.) Delete \n";
-	cout << "\n\t 5.) Update \n";
+	if (isAdmin == 1) { 
+		cout << "\n\t 3.) Add \n"; 
+		cout << "\n\t 4.) Delete \n"; 
+		cout << "\n\t 5.) Update \n"; 
+		cout << "\n\t 6.) Organize Sale \n"; }
 
 	int choice = 0;
 	cout << "\n Choice: ";
 	cin >> choice;
-	while ((choice <= 0) || (choice > 5)) {
-		cout << " ***INVALID INPUT***\n";
-		cout << " Try Again: number must be between 1 to 5 \n";
-		cout << " Choice: ";
-		cin >> choice;
+	if (isAdmin == 1) {
+		while ((choice <= 0) || (choice > 6)) {
+			cout << " ***INVALID INPUT***\n";
+			cout << " Try Again: number must be between 1 to 6 \n";
+			cout << " Choice: ";
+			cin >> choice;
+		}
+	} else {
+		while ((choice <= 0) || (choice > 2)) {
+			cout << " ***INVALID INPUT***\n";
+			cout << " Try Again: number must be between 1 to 2 \n";
+			cout << " Choice: ";
+			cin >> choice;
+		}
 	}
+	
 	switch (choice) {
 	case 1: // QUERY
 			// Display a search fields 
@@ -75,6 +108,7 @@ int main() {
 		TableEnd();
 		break;
 
+	// Manipulating Data stored in Database
 	case 3: // ADD
 		NeedSave = 1;
 		break;
@@ -84,8 +118,11 @@ int main() {
 	case 5: // UPDATE
 		NeedSave = 1;
 		break;
+
+	case 6: // ORGANIZE SALE
+		NeedSave = 1;
+		break;
 	}
-	
 	// Saving changes made to the file
 	if (NeedSave == 1) {
 		ofstream os("BookData.txt", ios::out | ios::trunc);
@@ -94,7 +131,7 @@ int main() {
 			for (int i = 0; i <= (AmountOfBooks - 1); i++) {
 				part1 = BOOKID.at(i) + "|" + TITLE.at(i) + "|" + AUTHOR.at(i) + "|";
 				part2 = GENRE.at(i) + "|" + PUBLISHER.at(i) + "|" + YEAR.at(i) + "|";
-				part3 = PAGES.at(i) + "|" + ORGPRICE.at(i) + "|" + ISBN.at(i);
+				part3 = PAGES.at(i) + "|" + ORGPRICE.at(i) + "|" + RETAILPRICE.at(i) + "|" + ISBN.at(i);
 				aggregated = part1.append(part2.append(part3));
 				os << aggregated << endl;
 			}
