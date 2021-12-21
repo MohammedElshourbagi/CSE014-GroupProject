@@ -1,10 +1,10 @@
-00001|Calculus: Early Transcendentals|James Stewart|0000000000001|Textbook|Cengage Learning|2020|1421|27.99
-00002|Physics for Scientists and Engineers|Serway & Jewett|97811333954057|Textbook|Cengage Learning|2014|1622|32.99
-00003|Engineering Mechanics: Statics|R.C. Hibbeler|9780136077909|Textbook|Pearson|2009|672|25.0
-00004|Harry Potter and the Philosopher's Stone|J.K. Rowling|9780590353403|Fantasy|Bloomsbury|1997|223|12.5
-00005|Harry Potter and the Chamber of Secrets|J.K. Rowling|9780439064866|Fantasy|Bloomsbury|1998|251|12.5
-00006|Harry Potter and the Prisoner of Azkaban|J.K. Rowling|9780439136358|Fantasy|Bloomsbury|1999|317|12.5
-00007|Harry Potter and the Goblet of Fire|J.K. Rowling|9780439139595|Fantasy|Bloomsbury|2000|636|14.5
-00008|Harry Potter and the Order of the Phoenix|J.K. Rowling|9780439358064|Fantasy|Bloomsbury|2003|766|15.5
-00009|Harry Potter and the Half-Blood Prince|J.K. Rowling|9782005921146|Fantasy|Bloomsbury|2005|607|15.5
-00010|Harry Potter and the Deathly Hallows|J.K. Rowling|9780545029360|Fantasy|Bloomsbury|2007|607|15.5
+00001|Calculus: Early Transcendentals|James Stewart|Textbook|Cengage Learning|2020|1421|27.99|0000000000001
+00002|Physics for Scientists and Engineers|Serway & Jewett|Textbook|Cengage Learning|2014|1622|32.99|9781133954057
+00003|Engineering Mechanics: Statics|R.C. Hibbeler|Textbook|Pearson|2009|672|25.00|9780136077909
+00004|Harry Potter and the Philosopher's Stone|J.K. Rowling|Fantasy|Bloomsbury|1997|223|12.50|9780590353403
+00005|Harry Potter and the Chamber of Secrets|J.K. Rowling|Fantasy|Bloomsbury|1998|251|12.50|9780439064866
+00006|Harry Potter and the Prisoner of Azkaban|J.K. Rowling|Fantasy|Bloomsbury|1999|317|12.50|9780439136358
+00007|Harry Potter and the Goblet of Fire|J.K. Rowling|Fantasy|Bloomsbury|2000|636|14.50|9780439139595
+00008|Harry Potter and the Order of the Phoenix|J.K. Rowling|Fantasy|Bloomsbury|2003|766|15.50|9780439358064
+00009|Harry Potter and the Half-Blood Prince|J.K. Rowling|Fantasy|Bloomsbury|2005|607|15.50|9782005921146
+00010|Harry Potter and the Deathly Hallows|J.K. Rowling|Fantasy|Bloomsbury|2007|607|15.50|9780545029360
