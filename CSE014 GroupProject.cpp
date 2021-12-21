@@ -11,6 +11,7 @@ using namespace std;
 // Prototype functions are declared here
 void TableHeader();
 void TableEnd();
+char PerformAnotherOperation();
 
 int main() {
 	cout << " This is program manages and maintain a database of books in a library.";
@@ -73,39 +74,32 @@ int main() {
 		cout << "\n\t 5.) Update \n"; 
 		cout << "\n\t 6.) Organize Sale \n"; }
 
-	int choice = 0;
+	int choice = 0, ChoiceUpperBound[2] = {2,6}, UpperBound;
+	if (isAdmin == 1) { UpperBound = 1; } else { UpperBound = 0; }
 	cout << "\n Choice: ";
 	cin >> choice;
-	if (isAdmin == 1) {
-		while ((choice <= 0) || (choice > 6)) {
-			cout << " ***INVALID INPUT***\n";
-			cout << " Try Again: number must be between 1 to 6 \n";
-			cout << " Choice: ";
-			cin >> choice;
-		}
-	} else {
-		while ((choice <= 0) || (choice > 2)) {
-			cout << " ***INVALID INPUT***\n";
-			cout << " Try Again: number must be between 1 to 2 \n";
-			cout << " Choice: ";
-			cin >> choice;
-		}
+	while ((choice <= 0) || (choice > ChoiceUpperBound[UpperBound])) {
+		cout << " ***INVALID INPUT***\n";
+		cout << " Try Again: number must be between 1 to " << ChoiceUpperBound[UpperBound];
+		cout << " \n Choice: ";
+		cin >> choice;
 	}
-	
+
 	switch (choice) {
 	case 1: // QUERY
 		int querychoice;
-		cout << "\n select by entring the corresponding number :\n";
+		cout << "\n Select by entring the corresponding number :\n";
 		cout << "\n\t 1: Search by Title \n";
 		cout << "\n\t 2: Search by Author \n";
 		cout << "\n\t 3: Search by Genre \n";
 		cout << "\n\t 4: Search by Publisher \n";
 		cout << "\n\t 5: Search by Price \n";
+		cout << " Choice: ";
 		cin >> querychoice;
 		while ((querychoice <= 0) || (querychoice > 7)) {
-			cout << "INVALID INPUT\n";
-			cout << "Try Again : number must be between 1 to 7 \n";
-			cout << "choice; ";
+			cout << " ***INVALID INPUT***\n";
+			cout << " Try Again : number must be between 1 to 7 \n";
+			cout << " \n Choice; ";
 			cin >> querychoice;
 		}
 		switch (querychoice) {
