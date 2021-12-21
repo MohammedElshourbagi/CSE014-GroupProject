@@ -54,7 +54,7 @@ int main() {
 		cin >> PassodeEntered;
 		if (PassodeEntered == Passcode) { isAdmin = 1;
 		} else {
-			int Attempts = 2;
+			int Attempts = 3;
 			while ((PassodeEntered != Passcode) && (Attempts > 0)){
 				cout << " Incorrect Password: You have " << Attempts << " arrempts left = ";
 				cin >> PassodeEntered;
@@ -93,38 +93,31 @@ int main() {
 	}
 	
 	switch (choice) {
-	case 1: 
+	case 1: // QUERY
 		int querychoice;
 		cout << "\n select by entring the corresponding number :\n";
-		cout << "\n 1: Search by Title \n";
-		cout << "\n 2: Search by Auther \n";
-		cout << "\n 3: Search by Genre \n";
-		cout << "\n 4: Search by Year \n";
-		cout << "\n 5: Search by Pages \n";
-		cout << "\n 6: Search by Publisher \n";
-		cout << "\n 7: Search by Price \n";
+		cout << "\n\t 1: Search by Title \n";
+		cout << "\n\t 2: Search by Author \n";
+		cout << "\n\t 3: Search by Genre \n";
+		cout << "\n\t 4: Search by Publisher \n";
+		cout << "\n\t 5: Search by Price \n";
 		cin >> querychoice;
-		while ((querychoice <=0)||(querychoice>7)) {
+		while ((querychoice <= 0) || (querychoice > 7)) {
 			cout << "INVALID INPUT\n";
 			cout << "Try Again : number must be between 1 to 7 \n";
 			cout << "choice; ";
 			cin >> querychoice;
 		}
 		switch (querychoice) {
-		case 1:
+		case 1: // Checks the TITLE vector if it contains the search term 
 			break;
-		case 2:
+		case 2: // Checks the AUTHOR vector if it contains the search term  
 			break;
-		case 3:
+		case 3: // Checks the GENRE vector if it contains the search term
 			break;
-		case 4:
+		case 4: // Checks the Publisher vector if it contains the search term
 			break;
-		case 5:
-			break;
-		case 6:
-			break;
-		case 7:
-			break;
+		case 5: // Display a small MENU with a price range
 		}
 
 		TableHeader();
