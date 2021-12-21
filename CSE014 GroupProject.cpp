@@ -94,8 +94,8 @@ int main() {
 	
 	switch (choice) {
 	case 1: // QUERY
-			// Display a search fields 
-			// Ask for the search term
+		// Display a search fields 
+		// Ask for the search term
 		TableHeader();
 		// output all books that have the search term in the right field
 		TableEnd();
@@ -103,23 +103,37 @@ int main() {
 
 	case 2: // DISPLAY
 		TableHeader();
-		// Loop using AmountOfBooks
-			// Display all content of elements 
+		for (int i = 0; i <= (AmountOfBooks - 1); i++) {
+			cout << setw(45) << left << TITLE.at(i);
+			cout << setw(18) << right << AUTHOR.at(i);
+			cout << setw(10) << right << GENRE.at(i);
+			cout << setw(6) << right << YEAR.at(i);
+			cout << setw(8) << right << PAGES.at(i);
+			cout << setw(20) << right << PUBLISHER.at(i);
+			cout << setw(8) << right << RETAILPRICE.at(i);
+			cout << endl; }
 		TableEnd();
 		break;
 
 	// Manipulating Data stored in Database
 	case 3: // ADD
+		// use this to add an element
+			//vectorname.insert(vectorname.begin() + (n-1), NewValueAdded)
 		NeedSave = 1;
 		break;
 	case 4: // DELETE
+		// use this to delete an element and shift the rest down by one
+			// using vectorname.erase (vectorname.begin()+(n-1))
 		NeedSave = 1;
 		break;
 	case 5: // UPDATE
+		// use this to update an element 
+			// vectorname.at((n-1)) = NewValue
 		NeedSave = 1;
 		break;
 
 	case 6: // ORGANIZE SALE
+		// Something like 20& off for all fantasy books 
 		NeedSave = 1;
 		break;
 	}
