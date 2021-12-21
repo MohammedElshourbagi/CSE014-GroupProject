@@ -93,9 +93,40 @@ int main() {
 	}
 	
 	switch (choice) {
-	case 1: // QUERY
-		// Display a search fields 
-		// Ask for the search term
+	case 1: 
+		int querychoice;
+		cout << "\n select by entring the corresponding number :\n";
+		cout << "\n 1: Search by Title \n";
+		cout << "\n 2: Search by Auther \n";
+		cout << "\n 3: Search by Genre \n";
+		cout << "\n 4: Search by Year \n";
+		cout << "\n 5: Search by Pages \n";
+		cout << "\n 6: Search by Publisher \n";
+		cout << "\n 7: Search by Price \n";
+		cin >> querychoice;
+		while ((querychoice <=0)||(querychoice>7)) {
+			cout << "INVALID INPUT\n";
+			cout << "Try Again : number must be between 1 to 7 \n";
+			cout << "choice; ";
+			cin >> querychoice;
+		}
+		switch (querychoice) {
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		case 7:
+			break;
+		}
+
 		TableHeader();
 		// output all books that have the search term in the right field
 		TableEnd();
