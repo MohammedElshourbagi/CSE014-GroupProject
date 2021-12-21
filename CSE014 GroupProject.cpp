@@ -1,5 +1,6 @@
 // CSE014 Group project that's worth 25% of our grade
-#include <iostream>		
+#include <iostream>	
+#include <iomanip>
 #include <fstream>		
 #include <sstream>	    
 #include <string>		
@@ -10,19 +11,13 @@ using namespace std;
 // Prototype functions are declared here
 void TableHeader();
 void TableEnd();
-void DBsearch(); // AbdoAymen
-void DBdisplay(); // AbuBakr
-void DBadd(); // Bodz the following is yours 
-void DBdelete(); 
-void DBupdate();
 
 int main() {
-	// Vectors containing all the info on the books 
-	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, ISBN, YEAR, PAGES, ORGPRICE;
+	int AmountOfBooks = 0;
+	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, ISBN, YEAR, PAGES, ORGPRICE; 	// Vectors containing all the info on the books 
 	// All data stored in text file is assinged to the vectors used in the program
 	// This allows us to manipulate the data more easily
 	fstream ifs("BookData.txt"); 
-	int AmountOfBooks = 0;
 	if (ifs.is_open()) {
 		for (string atLineRead; getline(ifs, atLineRead);) {
 			stringstream unprocessedLine(atLineRead);
@@ -34,10 +29,10 @@ int main() {
 				if (position == 3) { AUTHOR.push_back(segment); }
 				if (position == 4) { GENRE.push_back(segment); }
 				if (position == 5) { PUBLISHER.push_back(segment); }
-				if (position == 6) { ISBN.push_back(segment); }
-				if (position == 7) { YEAR.push_back(segment); }
-				if (position == 8) { PAGES.push_back(segment); }
-				if (position == 9) { ORGPRICE.push_back(segment); }
+				if (position == 6) { YEAR.push_back(segment); }
+				if (position == 7) { PAGES.push_back(segment); }
+				if (position == 8) { ORGPRICE.push_back(segment); }
+				if (position == 9) { ISBN.push_back(segment); }
 				if ((position >= 10) || (position == 0)) { cout << "\n ERROR: Improper Data Format.\n"; }
 				position++;
 			}
@@ -65,30 +60,28 @@ int main() {
 		cin >> choice;
 	}
 	switch (choice) {
-	case 1:
-		// This is a query 
+	case 1: // QUERY
 			// Display a search fields 
 			// Ask for the search term
-		DBsearch(); // This function should be givin a vectorName, searchTerm 
 		TableHeader();
 		// output all books that have the search term in the right field
 		TableEnd();
 		break;
-	case 2:
+
+	case 2: // DISPLAY
 		TableHeader();
-		DBdisplay(); // This function diplays all the information stored in the vectors
+		// Loop using AmountOfBooks
+			// Display all content of elements 
 		TableEnd();
 		break;
-	case 3:
-		DBadd();
+
+	case 3: // ADD
 		NeedSave = 1;
 		break;
-	case 4:
-		DBdelete();
+	case 4: // DELETE
 		NeedSave = 1;
 		break;
-	case 5:
-		DBupdate();
+	case 5: // UPDATE
 		NeedSave = 1;
 		break;
 	}
@@ -100,8 +93,8 @@ int main() {
 			string part1, part2, part3, aggregated;
 			for (int i = 0; i <= (AmountOfBooks - 1); i++) {
 				part1 = BOOKID.at(i) + "|" + TITLE.at(i) + "|" + AUTHOR.at(i) + "|";
-				part2 = GENRE.at(i) + "|" + PUBLISHER.at(i) + "|" + ISBN.at(i) + "|";
-				part3 = YEAR.at(i) + "|" + PAGES.at(i) + "|" + ORGPRICE.at(i);
+				part2 = GENRE.at(i) + "|" + PUBLISHER.at(i) + "|" + YEAR.at(i) + "|";
+				part3 = PAGES.at(i) + "|" + ORGPRICE.at(i) + "|" + ISBN.at(i);
 				aggregated = part1.append(part2.append(part3));
 				os << aggregated << endl;
 			}
@@ -109,28 +102,11 @@ int main() {
 	}
 }
 
-
 void TableHeader() {
-	cout << "\n========================================================================================================";
-	cout << "\n              Title               |     Author     |  Genre  | Year | Pages |    Publisher    | Price ";
-	cout << "\n----------------------------------+----------------+---------+------+-------+-----------------+---------\n";
+	cout << "\n===================================================================================================================";
+	cout << "\n                   Title                    |      Author      |  Genre  | Year | #Pages |    Publisher    | Price ";
+	cout << "\n--------------------------------------------+------------------+---------+------+--------+-----------------+-------\n";
 }
 void TableEnd() {
-	cout << "\n========================================================================================================\n";
-}
-
-void DBsearch() {
-
-}
-void DBdisplay() {
-
-}
-void DBadd() {
-
-}
-void DBdelete() {
-
-}
-void DBupdate() {
-
+	cout << "\n===================================================================================================================\n";
 }
