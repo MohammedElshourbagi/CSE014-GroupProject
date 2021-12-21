@@ -7,14 +7,14 @@
 #include <algorithm>
 #include <vector>	
 using namespace std;
-using std::cout;
-using std::cin;
 
 // Prototype functions are declared here
 void TableHeader();
 void TableEnd();
 
 int main() {
+	cout << " This is program manages and maintain a database of books in a library.";
+
 	int AmountOfBooks = 0;
 	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN; 	// Vectors containing all the info on the books 
 	// All data stored in text file is assinged to the vectors used in the program
@@ -44,27 +44,34 @@ int main() {
 	} else { cout << "\n ERROR: Something went wrong with openining the file\n"; }
 	bool NeedSave = 0; // Did the content of file change?, if it did then save
 
-	cout << " This is program manages and maintain a database of books in a library."; // Preface
-
 	int PassodeEntered, Passcode = 123;
 	bool isAdmin = 0;
 	char RunAsAdmin;
 	cout << "\n Run Program as Administrator? (Y/N): ";
 	cin >> RunAsAdmin;
 	if (RunAsAdmin == 'Y') {
-		cout << "Enter Admins Code = ";
+		cout << " Enter Admins Code = ";
 		cin >> PassodeEntered;
-		if (PassodeEntered == Passcode) { isAdmin = 1; }
-	} else { cout << " Program will run with standard functions only\n"; }
+		if (PassodeEntered == Passcode) { isAdmin = 1;
+		} else {
+			int Attempts = 2;
+			while ((PassodeEntered != Passcode) && (Attempts > 0)){
+				cout << " Incorrect Password: You have " << Attempts << " arrempts left = ";
+				cin >> PassodeEntered;
+				Attempts--; }
+			if (Attempts == 0) { cout << "\n Program will run with standard functions only\n"; }
+		}
+	} else { cout << "\n Program will run with standard functions only\n"; }
 	
 	// Displays all Starting choices 
 	cout << "\n Select by entering the corresponding numbers:\n";
 	cout << "\n\t 1.) Search \n";
 	cout << "\n\t 2.) Display \n";
-	if (isAdmin == 1) { cout << "\n\t 3.) Add \n"; }
-	if (isAdmin == 1) { cout << "\n\t 4.) Delete \n"; }
-	if (isAdmin == 1) { cout << "\n\t 5.) Update \n"; }
-	if (isAdmin == 1) { cout << "\n\t 6.) Organize Sale \n"; }
+	if (isAdmin == 1) { 
+		cout << "\n\t 3.) Add \n"; 
+		cout << "\n\t 4.) Delete \n"; 
+		cout << "\n\t 5.) Update \n"; 
+		cout << "\n\t 6.) Organize Sale \n"; }
 
 	int choice = 0;
 	cout << "\n Choice: ";
@@ -101,7 +108,7 @@ int main() {
 		TableEnd();
 		break;
 
-	// ADMIN FUNCTIONS 
+	// Manipulating Data stored in Database
 	case 3: // ADD
 		NeedSave = 1;
 		break;
@@ -113,11 +120,9 @@ int main() {
 		break;
 
 	case 6: // ORGANIZE SALE
+		NeedSave = 1;
 		break;
 	}
-
-
-	
 	// Saving changes made to the file
 	if (NeedSave == 1) {
 		ofstream os("BookData.txt", ios::out | ios::trunc);
@@ -139,7 +144,6 @@ void TableHeader() {
 	cout << "\n                   Title                    |      Author      |  Genre  | Year | #Pages |    Publisher    | Price ";
 	cout << "\n--------------------------------------------+------------------+---------+------+--------+-----------------+-------\n";
 }
-
 void TableEnd() {
 	cout << "\n===================================================================================================================\n";
 }
