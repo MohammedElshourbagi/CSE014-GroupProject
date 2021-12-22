@@ -124,6 +124,36 @@ int main() {
 				IndexOfSearchedTerm = searchWithinFunction(PUBLISHER);
 				break;
 			case 5: // Display a small MENU with a price range
+				cout << "\n\t 1: Price range of 0 to 15\n";
+				cout << "\n\t 2: Price range of 16 to 35\n";
+				cout << "\n\t 3: Price range of 36 to 50\n";
+				cout << "\n\t 4: Price range of 51 to 75\n";
+				cout << "\n\t 5: Price range of 76 to 100\n";
+				cout << "\n\t 6: Price range of bigger than 100 \n";
+				int numberchoice;
+				cout << "Choice: ";
+				cin >> numberchoice;
+				while ((numberchoice <= 0) || (numberchoice >= 6)) {
+					cout << "***INVALID INPUT***\n";
+					cout << "Try Again : number must be between 1 to 6 \n";
+					cin >> numberchoice;
+				}
+				switch (numberchoice) {
+				case 1:
+
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					break;
+				case 5:
+					break;
+				case 6:
+					break;
+
+				}
 				break;
 			}
 			AskAnotherOperation();
