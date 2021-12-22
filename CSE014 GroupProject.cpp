@@ -10,16 +10,20 @@ using namespace std;
 
 // Prototype functions are declared here
 void TableHeader();
+void DisplayAllData();
 void TableEnd();
+char AskAnotherOperation();
 vector<int> searchWithinFunction(vector<string> vectorname);
+
+// Global Variables // Done to make effective use of functions 
+int AmountOfBooks = 0;
+char AnotherOperation = 'Y';
+// Vectors containing all the info on the books 
+vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN;
+vector<int> IndexOfSearchedTerm; // Used in Query 
 
 int main() {
 	cout << " This is program manages and maintain a database of books in a library.";
-
-	int AmountOfBooks = 0;
-	// Vectors containing all the info on the books 
-	vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN;
-	vector<int> IndexOfSearchedTerm; // Used in Query 
 	// All data stored in text file is assinged to the vectors used in the program
 	// This allows us to manipulate the data more easily
 	fstream ifs("BookData.txt"); 
@@ -66,102 +70,100 @@ int main() {
 		}
 	} else { cout << "\n Program will run with standard functions only\n"; }
 	
-	// Displays all Starting choices 
-	cout << "\n Select by entering the corresponding numbers:\n";
-	cout << "\n\t 1.) Search \n";
-	cout << "\n\t 2.) Display \n";
-	if (isAdmin == 1) { 
-		cout << "\n\t 3.) Add \n"; 
-		cout << "\n\t 4.) Delete \n"; 
-		cout << "\n\t 5.) Update \n"; 
-		cout << "\n\t 6.) Organize Sale \n"; }
+	while (AnotherOperation == 'Y'){
+		// Displays all Starting choices 
+		cout << "\n Select by entering the corresponding numbers:\n";
+		cout << "\n\t 1.) Search \n";
+		cout << "\n\t 2.) Display \n";
+		if (isAdmin == 1) { 
+			cout << "\n\t 3.) Add \n"; 
+			cout << "\n\t 4.) Delete \n"; 
+			cout << "\n\t 5.) Update \n"; 
+			cout << "\n\t 6.) Organize Sale \n"; 
+		}
 
-	int choice = 0, ChoiceUpperBound[2] = {2,6}, UpperBound;
-	if (isAdmin == 1) { UpperBound = 1; } else { UpperBound = 0; }
-	cout << "\n Choice: ";
-	cin >> choice;
-	while ((choice <= 0) || (choice > ChoiceUpperBound[UpperBound])) {
-		cout << " ***INVALID INPUT***\n";
-		cout << " Try Again: number must be between 1 to " << ChoiceUpperBound[UpperBound];
-		cout << " \n Choice: ";
+		int choice = 0, ChoiceUpperBound[2] = {2,6}, UpperBound;
+		if (isAdmin == 1) { UpperBound = 1; } else { UpperBound = 0; }
+		cout << "\n Choice: ";
 		cin >> choice;
-	}
-
-	switch (choice) {
-	case 1: // QUERY
-		int querychoice;
-		cout << "\n Select by entring the corresponding number :\n";
-		cout << "\n\t 1: Search by Title \n";
-		cout << "\n\t 2: Search by Author \n";
-		cout << "\n\t 3: Search by Genre \n";
-		cout << "\n\t 4: Search by Publisher \n";
-		cout << "\n\t 5: Search by Price \n";
-		cout << " Choice: ";
-		cin >> querychoice;
-		while ((querychoice <= 0) || (querychoice > 7)) {
+		while ((choice <= 0) || (choice > ChoiceUpperBound[UpperBound])) {
 			cout << " ***INVALID INPUT***\n";
-			cout << " Try Again : number must be between 1 to 7 \n";
-			cout << " \n Choice; ";
+			cout << " Try Again: number must be between 1 to " << ChoiceUpperBound[UpperBound];
+			cout << " \n Choice: ";
+			cin >> choice;
+		}
+
+		switch (choice) {
+		case 1: // QUERY
+			int querychoice;
+			cout << "\n Select by entring the corresponding number :\n";
+			cout << "\n\t 1: Search by Title \n";
+			cout << "\n\t 2: Search by Author \n";
+			cout << "\n\t 3: Search by Genre \n";
+			cout << "\n\t 4: Search by Publisher \n";
+			cout << "\n\t 5: Search by Price \n";
+			cout << " Choice: ";
 			cin >> querychoice;
+			while ((querychoice <= 0) || (querychoice > 7)) {
+				cout << " ***INVALID INPUT***\n";
+				cout << " Try Again : number must be between 1 to 7 \n";
+				cout << " \n Choice; ";
+				cin >> querychoice;
+			}
+			switch (querychoice) {
+			case 1: // Checks the TITLE vector if it contains the search term 
+				IndexOfSearchedTerm = searchWithinFunction(TITLE);
+				break;
+			case 2: // Checks the AUTHOR vector if it contains the search term 
+				IndexOfSearchedTerm = searchWithinFunction(AUTHOR);
+				break;
+			case 3: // Checks the GENRE vector if it contains the search term
+				IndexOfSearchedTerm = searchWithinFunction(GENRE);
+				break;
+			case 4: // Checks the Publisher vector if it contains the search term
+				IndexOfSearchedTerm = searchWithinFunction(PUBLISHER);
+				break;
+			case 5: // Display a small MENU with a price range
+				break;
+			}
+			AskAnotherOperation();
+			break;
+
+		case 2: // DISPLAY
+			TableHeader();
+			DisplayAllData();
+			TableEnd();
+			AskAnotherOperation();
+			break;
+
+		// Manipulating Data stored in Database
+		case 3: // ADD
+			// use this to add an element
+				//vectorname.insert(vectorname.begin() + (n-1), NewValueAdded)
+			NeedSave = 1;			
+			AskAnotherOperation();
+			break;
+		case 4: // DELETE
+			// use this to delete an element and shift the rest down by one
+				// using vectorname.erase (vectorname.begin()+(n-1))
+			NeedSave = 1;
+			AskAnotherOperation();
+			break;
+		case 5: // UPDATE
+			// use this to update an element 
+				// vectorname.at((n-1)) = NewValue
+			NeedSave = 1;	
+			AskAnotherOperation();
+			break;
+
+		case 6: // ORGANIZE SALE
+			// Something like 20& off for all fantasy books 
+			NeedSave = 1;
+			AskAnotherOperation();
+			break;
 		}
-		switch (querychoice) {
-		case 1: // Checks the TITLE vector if it contains the search term 
-			searchWithinFunction(TITLE);
-			break;
-		case 2: // Checks the AUTHOR vector if it contains the search term 
-			searchWithinFunction(AUTHOR);
-			break;
-		case 3: // Checks the GENRE vector if it contains the search term
-			searchWithinFunction(GENRE);
-			break;
-		case 4: // Checks the Publisher vector if it contains the search term
-			searchWithinFunction(PUBLISHER);
-			break;
-		case 5: // Display a small MENU with a price range
-			break;
-		}
-
-		TableHeader();
-		// output all books that have the search term in the right field
-		TableEnd();
-		break;
-
-	case 2: // DISPLAY
-		TableHeader();
-		for (int i = 0; i <= (AmountOfBooks - 1); i++) {
-			cout << setw(45) << left << TITLE.at(i);
-			cout << setw(18) << right << AUTHOR.at(i);
-			cout << setw(10) << right << GENRE.at(i);
-			cout << setw(6) << right << YEAR.at(i);
-			cout << setw(8) << right << PAGES.at(i);
-			cout << setw(20) << right << PUBLISHER.at(i);
-			cout << setw(8) << right << RETAILPRICE.at(i);
-			cout << endl; }
-		TableEnd();
-		break;
-
-	// Manipulating Data stored in Database
-	case 3: // ADD
-		// use this to add an element
-			//vectorname.insert(vectorname.begin() + (n-1), NewValueAdded)
-		NeedSave = 1;
-		break;
-	case 4: // DELETE
-		// use this to delete an element and shift the rest down by one
-			// using vectorname.erase (vectorname.begin()+(n-1))
-		NeedSave = 1;
-		break;
-	case 5: // UPDATE
-		// use this to update an element 
-			// vectorname.at((n-1)) = NewValue
-		NeedSave = 1;
-		break;
-
-	case 6: // ORGANIZE SALE
-		// Something like 20& off for all fantasy books 
-		NeedSave = 1;
-		break;
 	}
+
 	// Saving changes made to the file
 	if (NeedSave == 1) {
 		ofstream os("BookData.txt", ios::out | ios::trunc);
@@ -183,8 +185,24 @@ void TableHeader() {
 	cout << "\n                   Title                    |      Author      |  Genre  | Year | #Pages |    Publisher    | Price ";
 	cout << "\n--------------------------------------------+------------------+---------+------+--------+-----------------+-------\n";
 }
+void DisplayAllData() {
+	for (int i = 0; i <= (AmountOfBooks - 1); i++) {
+		cout << setw(45) << left << TITLE.at(i);
+		cout << setw(18) << right << AUTHOR.at(i);
+		cout << setw(10) << right << GENRE.at(i);
+		cout << setw(6) << right << YEAR.at(i);
+		cout << setw(8) << right << PAGES.at(i);
+		cout << setw(20) << right << PUBLISHER.at(i);
+		cout << setw(8) << right << RETAILPRICE.at(i);
+		cout << endl; }
+}
 void TableEnd() {
 	cout << "\n===================================================================================================================\n";
+}
+char AskAnotherOperation() {
+	cout << "\n Perform another operation? (Y/N) = ";
+	cin >> AnotherOperation;
+	return AnotherOperation;
 }
 vector<int> searchWithinFunction(vector<string> vectorname) {
 	vector<int> IndexOfSearchedTerm;
@@ -196,9 +214,7 @@ vector<int> searchWithinFunction(vector<string> vectorname) {
 
 	int i = 0;
 	for (iter = vectorname.begin(); iter != vectorname.end(); ++iter) {
-		if (vectorname.at(i) == SearchTerm) {
-			IndexOfSearchedTerm.push_back(i);
-		}
+		if (vectorname.at(i) == SearchTerm) { IndexOfSearchedTerm.push_back(i); }
 		i++;
 	}
 	return IndexOfSearchedTerm;
