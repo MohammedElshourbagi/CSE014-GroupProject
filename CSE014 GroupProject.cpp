@@ -20,6 +20,9 @@ int AmountOfBooks = 0;
 char AnotherOperation = 'Y';
 // Vectors containing all the info on the books 
 vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN;
+string NewBOOKID, NewTITLE, NewAUTHOR, NewGENRE;
+string NewPUBLISHER, NewYEAR, NewPAGES, NewORGPRICE;
+string NewRETAILPRICE, NewISBN;
 vector<int> IndexOfSearchedTerm; // Used in Query 
 
 int main() {
@@ -169,6 +172,52 @@ int main() {
 		case 3: // ADD
 			// use this to add an element
 				//vectorname.insert(vectorname.begin() + (n-1), NewValueAdded)
+			cout << "State the Title: ";
+				cin >> NewTITLE;
+		    cout << "State the Author";
+			    cin >> NewAUTHOR;
+		    cout << "State the Genre ";
+			    cin >> NewGENRE;
+			cout << "State the Publisher";
+				cin >> NewPUBLISHER;
+			cout << "Srtate the Year";
+				cin >> NewYEAR;
+			cout << "State the Pages";
+				cin >> NewPAGES;
+			cout << "State the ORGPrice";
+			    cin >> NewORGPRICE;
+				TableHeader();
+				cout << setw(45) << left << NewTITLE;
+				cout << setw(18) << right << NewAUTHOR;
+				cout << setw(10) << right << NewGENRE;
+				cout << setw(6) << right << NewYEAR;
+				cout << setw(8) << right << NewPAGES;
+				cout << setw(20) << right << NewPUBLISHER;
+				cout << setw(8) << right << NewRETAILPRICE;
+				cout << endl;
+
+				cout << "\n Confirmation, Is all the Information correct? (Y/N) = ";
+				char AddConfirmation;
+				cin >> AddConfirmation;
+				TITLE.push_back(NewTITLE);
+
+				AUTHOR.push_back(NewAUTHOR);
+
+				GENRE.push_back(NewGENRE);
+
+				PUBLISHER.push_back(NewPUBLISHER);
+
+				YEAR.push_back(NewYEAR);
+
+				PAGES.push_back(NewPAGES);
+
+				ORGPRICE.push_back(NewORGPRICE);
+
+
+
+
+
+
 			NeedSave = 1;			
 			AskAnotherOperation();
 			break;
