@@ -14,12 +14,14 @@ void DisplayAllData();
 void TableEnd();
 
 char AskAnotherOperation();
+void UpdateSwitch(int AddChoice);
 bool UniqueCheck(string NewISBN);
 vector<int> searchWithinFunction(vector<string> vectorname);
 
 // Global Variables // Done to make effective use of functions 
 int AmountOfBooks = 0;
-char AnotherOperation = 'Y';
+char AnotherOperation = 'Y', ConfirmationCheck;
+
 // Vectors containing all the info on the books 
 vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN;
 string NewBOOKID, NewTITLE, NewAUTHOR, NewGENRE, NewPUBLISHER, NewYEAR, NewPAGES, NewPRICE, NewISBN;
@@ -79,8 +81,11 @@ int main() {
 	else { cout << "\n Program will run with standard functions only\n"; }
 
 	// Initialize Variables 
-	char AddConfirmation;
+
 	bool AddChangedData = 1;
+	int DeleteAtIndex, IDXDel;
+	string SearchForBOOKID;
+	vector<string>::iterator iterID;
 
 	while (AnotherOperation == 'Y') {
 		// Displays all Starting choices 
@@ -200,7 +205,8 @@ int main() {
 			while (UniqueCheck(NewISBN) == 0) {
 				cout << "\n ISBN number is already taken \n";
 				cout << "\t Enter a New Number: ";
-				cin >> NewISBN;}
+				cin >> NewISBN;
+			}
 
 			TableHeader();
 			cout << setw(45) << left << NewTITLE;
@@ -210,12 +216,12 @@ int main() {
 			cout << setw(8) << right << NewPAGES;
 			cout << setw(20) << right << NewPUBLISHER;
 			cout << setw(8) << right << NewPRICE;
-			cout << endl;
+			TableEnd();
 
 			cout << "\n Confirmation, Is all the Information correct? (Y/N) = ";
-			cin >> AddConfirmation;
+			cin >> ConfirmationCheck;
 			while (AddChangedData == 1) {
-				if (AddConfirmation == 'Y') {
+				if (ConfirmationCheck == 'Y') {
 					BOOKID.push_back(NewBOOKID);
 					TITLE.push_back(NewTITLE);
 					AUTHOR.push_back(NewAUTHOR);
@@ -229,7 +235,7 @@ int main() {
 					AmountOfBooks++;
 					AddChangedData = 0;
 				}
-				else if (AddConfirmation == 'N') {
+				else if (ConfirmationCheck == 'N') {
 					int AddChoice;
 					cout << "\n\t 1: Change the Title? \n";
 					cout << "\n\t 2: Change the Author? \n";
@@ -247,55 +253,64 @@ int main() {
 						cout << " \n Choice; ";
 						cin >> AddChoice;
 					}
-
-					switch (AddChoice) {
-					case 1: // CHANGE TITLE
-						cout << "Change the Title to = ";
-						cin >> NewTITLE;
-						break;
-					case 2: // CHANGE AUTHOR
-						cout << "Change the Author to = ";
-						cin >> NewAUTHOR;
-						break;
-					case 3: // CHANGE GENRE
-						cout << "Change the Genre to = ";
-						cin >> NewGENRE;
-						break;
-					case 4: // CHANGE PUBLISHER
-						cout << "Change the Publisher to = ";
-						cin >> NewPUBLISHER;
-						break;
-					case 5: // CHANGE YEAR
-						cout << "Change the Year to = ";
-						cin >> NewYEAR;
-						break;
-					case 6: // CHANGE PAGES
-						cout << "Change the Pages to = ";
-						cin >> NewPAGES;
-						break;
-					case 7: // CHANGE PRICES 
-						cout << "Change the Price to = ";
-						cin >> NewPRICE;
-						break;
-					case 8: // NO MORE CHANGES
-						AddConfirmation = 'Y';
-						break;
-					}
-				} else {
-					cout << "\n*** INVALID INPUT ***\n";
-					cout << "Try Again: ";
-					cin >> AddConfirmation; }
+					UpdateSwitch(AddChoice);
+				}
+				else {
+					cout << "\n\t*** INVALID INPUT ***\n";
+					cout << " Try Again (Y/N): ";
+					cin >> ConfirmationCheck;
+				}
 			}
 
 			NeedSave = 1;
 			AskAnotherOperation();
 			break;
+
 		case 4: // DELETE
-			// use this to delete an element and shift the rest down by one
-				// using vectorname.erase (vectorname.begin()+(n-1))
+			DeleteAtIndex = 0, IDXDel = 0;
+
+			cout << " \n Enter the BOOKID = ";
+			cin >> SearchForBOOKID;
+			for (iterID = BOOKID.begin(); iterID != BOOKID.end(); ++iterID) {
+				if (BOOKID.at(DeleteAtIndex) == SearchForBOOKID) { IDXDel = DeleteAtIndex; }
+				DeleteAtIndex++;
+			}
+
+			TableHeader();
+			cout << setw(45) << left << TITLE.at(IDXDel);
+			cout << setw(18) << right << AUTHOR.at(IDXDel);
+			cout << setw(10) << right << GENRE.at(IDXDel);
+			cout << setw(6) << right << YEAR.at(IDXDel);
+			cout << setw(8) << right << PAGES.at(IDXDel);
+			cout << setw(20) << right << PUBLISHER.at(IDXDel);
+			cout << setw(8) << right << RETAILPRICE.at(IDXDel);
+			TableEnd();
+
+			cout << "\n Confirmation, Do you want procced with deletion? (Y/N) = ";
+			cin >> ConfirmationCheck;
+			if (ConfirmationCheck == 'Y') {
+				BOOKID.erase(BOOKID.begin() + IDXDel);
+				TITLE.erase(TITLE.begin() + IDXDel);
+				AUTHOR.erase(AUTHOR.begin() + IDXDel);
+				GENRE.erase(GENRE.begin() + IDXDel);
+				PUBLISHER.erase(PUBLISHER.begin() + IDXDel);
+				YEAR.erase(YEAR.begin() + IDXDel);
+				PAGES.erase(PAGES.begin() + IDXDel);
+				ORGPRICE.erase(ORGPRICE.begin() + IDXDel);
+				RETAILPRICE.erase(RETAILPRICE.begin() + IDXDel);
+				ISBN.erase(ISBN.begin() + IDXDel);
+				AmountOfBooks--;
+			}
+			else if (ConfirmationCheck == 'N') { cout << "\n\t*** No changes were made ***\n"; }
+			else {
+				cout << "\n\t INVALID INPUT \n";
+				cout << " Try Again (Y/N): ";
+				cin >> ConfirmationCheck;
+			}
 			NeedSave = 1;
 			AskAnotherOperation();
 			break;
+
 		case 5: // UPDATE
 			// use this to update an element 
 				// vectorname.at((n-1)) = NewValue
@@ -354,14 +369,50 @@ char AskAnotherOperation() {
 	return AnotherOperation;
 }
 
-bool UniqueCheck (string NewISBN) {
+void UpdateSwitch(int AddChoice) {
+	switch (AddChoice) {
+	case 1: // CHANGE TITLE
+		cout << "Change the Title to = ";
+		cin >> NewTITLE;
+		break;
+	case 2: // CHANGE AUTHOR
+		cout << "Change the Author to = ";
+		cin >> NewAUTHOR;
+		break;
+	case 3: // CHANGE GENRE
+		cout << "Change the Genre to = ";
+		cin >> NewGENRE;
+		break;
+	case 4: // CHANGE PUBLISHER
+		cout << "Change the Publisher to = ";
+		cin >> NewPUBLISHER;
+		break;
+	case 5: // CHANGE YEAR
+		cout << "Change the Year to = ";
+		cin >> NewYEAR;
+		break;
+	case 6: // CHANGE PAGES
+		cout << "Change the Pages to = ";
+		cin >> NewPAGES;
+		break;
+	case 7: // CHANGE PRICES 
+		cout << "Change the Price to = ";
+		cin >> NewPRICE;
+		break;
+	case 8: // NO MORE CHANGES
+		ConfirmationCheck = 'Y';
+		break;
+	}
+}
+
+bool UniqueCheck(string NewISBN) {
 	bool IsUnique = 1;
 	vector<string>::iterator iterISBNunique;
 
 	int i = 0;
 	for (iterISBNunique = BOOKID.begin(); iterISBNunique != BOOKID.end(); ++iterISBNunique) {
-		if (BOOKID.at(i) == NewISBN) { 
-			IsUnique = 0; 
+		if (BOOKID.at(i) == NewISBN) {
+			IsUnique = 0;
 			i++;
 		}
 	}
