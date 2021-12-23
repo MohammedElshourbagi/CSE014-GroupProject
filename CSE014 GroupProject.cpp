@@ -12,7 +12,9 @@ using namespace std;
 void TableHeader();
 void DisplayAllData();
 void TableEnd();
+
 char AskAnotherOperation();
+bool UniqueCheck(string NewISBN);
 vector<int> searchWithinFunction(vector<string> vectorname);
 
 // Global Variables // Done to make effective use of functions 
@@ -20,16 +22,14 @@ int AmountOfBooks = 0;
 char AnotherOperation = 'Y';
 // Vectors containing all the info on the books 
 vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN;
-string NewBOOKID, NewTITLE, NewAUTHOR, NewGENRE;
-string NewPUBLISHER, NewYEAR, NewPAGES, NewORGPRICE;
-string NewRETAILPRICE, NewISBN;
+string NewBOOKID, NewTITLE, NewAUTHOR, NewGENRE, NewPUBLISHER, NewYEAR, NewPAGES, NewPRICE, NewISBN;
 vector<int> IndexOfSearchedTerm; // Used in Query 
 
 int main() {
 	cout << " This is program manages and maintain a database of books in a library.";
 	// All data stored in text file is assinged to the vectors used in the program
 	// This allows us to manipulate the data more easily
-	fstream ifs("BookData.txt"); 
+	fstream ifs("BookData.txt");
 	if (ifs.is_open()) {
 		for (string atLineRead; getline(ifs, atLineRead);) {
 			stringstream unprocessedLine(atLineRead);
@@ -51,7 +51,8 @@ int main() {
 			}
 			AmountOfBooks++;
 		}
-	} else { cout << "\n ERROR: Something went wrong with openining the file\n"; }
+	}
+	else { cout << "\n ERROR: Something went wrong with openining the file\n"; }
 	bool NeedSave = 0; // Did the content of file change?, if it did then save
 
 	int PassodeEntered, Passcode = 123;
@@ -62,31 +63,40 @@ int main() {
 	if (RunAsAdmin == 'Y') {
 		cout << " Enter Admins Code = ";
 		cin >> PassodeEntered;
-		if (PassodeEntered == Passcode) { isAdmin = 1;
-		} else {
+		if (PassodeEntered == Passcode) {
+			isAdmin = 1;
+		}
+		else {
 			int Attempts = 3;
-			while ((PassodeEntered != Passcode) && (Attempts > 0)){
+			while ((PassodeEntered != Passcode) && (Attempts > 0)) {
 				cout << " Incorrect Password: You have " << Attempts << " arrempts left = ";
 				cin >> PassodeEntered;
-				Attempts--; }
+				Attempts--;
+			}
 			if (Attempts == 0) { cout << "\n Program will run with standard functions only\n"; }
 		}
-	} else { cout << "\n Program will run with standard functions only\n"; }
-	
-	while (AnotherOperation == 'Y'){
+	}
+	else { cout << "\n Program will run with standard functions only\n"; }
+
+	// Initialize Variables 
+	char AddConfirmation;
+	bool AddChangedData = 1;
+
+	while (AnotherOperation == 'Y') {
 		// Displays all Starting choices 
 		cout << "\n Select by entering the corresponding numbers:\n";
 		cout << "\n\t 1.) Search \n";
 		cout << "\n\t 2.) Display \n";
-		if (isAdmin == 1) { 
-			cout << "\n\t 3.) Add \n"; 
-			cout << "\n\t 4.) Delete \n"; 
-			cout << "\n\t 5.) Update \n"; 
-			cout << "\n\t 6.) Organize Sale \n"; 
+		if (isAdmin == 1) {
+			cout << "\n\t 3.) Add \n";
+			cout << "\n\t 4.) Delete \n";
+			cout << "\n\t 5.) Update \n";
+			cout << "\n\t 6.) Organize Sale \n";
 		}
 
-		int choice = 0, ChoiceUpperBound[2] = {2,6}, UpperBound;
-		if (isAdmin == 1) { UpperBound = 1; } else { UpperBound = 0; }
+		int choice = 0, ChoiceUpperBound[2] = { 2,6 }, UpperBound;
+		if (isAdmin == 1) { UpperBound = 1; }
+		else { UpperBound = 0; }
 		cout << "\n Choice: ";
 		cin >> choice;
 		while ((choice <= 0) || (choice > ChoiceUpperBound[UpperBound])) {
@@ -168,57 +178,116 @@ int main() {
 			AskAnotherOperation();
 			break;
 
-		// Manipulating Data stored in Database
+			// Manipulating Data stored in Database
 		case 3: // ADD
-			// use this to add an element
-				//vectorname.insert(vectorname.begin() + (n-1), NewValueAdded)
-			cout << "State the Title: ";
-				cin >> NewTITLE;
-		    cout << "State the Author";
-			    cin >> NewAUTHOR;
-		    cout << "State the Genre ";
-			    cin >> NewGENRE;
-			cout << "State the Publisher";
-				cin >> NewPUBLISHER;
-			cout << "Srtate the Year";
-				cin >> NewYEAR;
-			cout << "State the Pages";
-				cin >> NewPAGES;
-			cout << "State the ORGPrice";
-			    cin >> NewORGPRICE;
-				TableHeader();
-				cout << setw(45) << left << NewTITLE;
-				cout << setw(18) << right << NewAUTHOR;
-				cout << setw(10) << right << NewGENRE;
-				cout << setw(6) << right << NewYEAR;
-				cout << setw(8) << right << NewPAGES;
-				cout << setw(20) << right << NewPUBLISHER;
-				cout << setw(8) << right << NewRETAILPRICE;
-				cout << endl;
+			NewBOOKID = to_string(stoi(BOOKID.back()) + 1);
+			cout << "\t State the Title: ";
+			cin >> NewTITLE;
+			cout << "\t State the Author: ";
+			cin >> NewAUTHOR;
+			cout << "\t State the Genre: ";
+			cin >> NewGENRE;
+			cout << "\t State the Publisher: ";
+			cin >> NewPUBLISHER;
+			cout << "\t State the Year: ";
+			cin >> NewYEAR;
+			cout << "\t State the Pages: ";
+			cin >> NewPAGES;
+			cout << "\t State the Price: ";
+			cin >> NewPRICE;
+			cout << "\t State the ISBN number: ";
+			cin >> NewISBN;
+			while (UniqueCheck(NewISBN) == 0) {
+				cout << "\n ISBN number is already taken \n";
+				cout << "\t Enter a New Number: ";
+				cin >> NewISBN;}
 
-				cout << "\n Confirmation, Is all the Information correct? (Y/N) = ";
-				char AddConfirmation;
-				cin >> AddConfirmation;
-				TITLE.push_back(NewTITLE);
+			TableHeader();
+			cout << setw(45) << left << NewTITLE;
+			cout << setw(18) << right << NewAUTHOR;
+			cout << setw(10) << right << NewGENRE;
+			cout << setw(6) << right << NewYEAR;
+			cout << setw(8) << right << NewPAGES;
+			cout << setw(20) << right << NewPUBLISHER;
+			cout << setw(8) << right << NewPRICE;
+			cout << endl;
 
-				AUTHOR.push_back(NewAUTHOR);
+			cout << "\n Confirmation, Is all the Information correct? (Y/N) = ";
+			cin >> AddConfirmation;
+			while (AddChangedData == 1) {
+				if (AddConfirmation == 'Y') {
+					BOOKID.push_back(NewBOOKID);
+					TITLE.push_back(NewTITLE);
+					AUTHOR.push_back(NewAUTHOR);
+					GENRE.push_back(NewGENRE);
+					PUBLISHER.push_back(NewPUBLISHER);
+					YEAR.push_back(NewYEAR);
+					PAGES.push_back(NewPAGES);
+					ORGPRICE.push_back(NewPRICE);
+					RETAILPRICE.push_back(NewPRICE);
+					ISBN.push_back(NewISBN);
+					AmountOfBooks++;
+					AddChangedData = 0;
+				}
+				else if (AddConfirmation == 'N') {
+					int AddChoice;
+					cout << "\n\t 1: Change the Title? \n";
+					cout << "\n\t 2: Change the Author? \n";
+					cout << "\n\t 3: Change the Genre? \n";
+					cout << "\n\t 4: Change the Publisher? \n";
+					cout << "\n\t 5: Change the Year? \n";
+					cout << "\n\t 6: Change the Pages? \n";
+					cout << "\n\t 7: Change the Price? \n";
+					cout << "\n\t 8: No More Changes? \n";
+					cout << "\n Choice: ";
+					cin >> AddChoice;
+					while ((AddChoice <= 0) || (AddChoice > 8)) {
+						cout << " INVALID INPUT\n";
+						cout << " Try Again : number must be between 1 to 8 \n";
+						cout << " \n Choice; ";
+						cin >> AddChoice;
+					}
 
-				GENRE.push_back(NewGENRE);
+					switch (AddChoice) {
+					case 1: // CHANGE TITLE
+						cout << "Change the Title to = ";
+						cin >> NewTITLE;
+						break;
+					case 2: // CHANGE AUTHOR
+						cout << "Change the Author to = ";
+						cin >> NewAUTHOR;
+						break;
+					case 3: // CHANGE GENRE
+						cout << "Change the Genre to = ";
+						cin >> NewGENRE;
+						break;
+					case 4: // CHANGE PUBLISHER
+						cout << "Change the Publisher to = ";
+						cin >> NewPUBLISHER;
+						break;
+					case 5: // CHANGE YEAR
+						cout << "Change the Year to = ";
+						cin >> NewYEAR;
+						break;
+					case 6: // CHANGE PAGES
+						cout << "Change the Pages to = ";
+						cin >> NewPAGES;
+						break;
+					case 7: // CHANGE PRICES 
+						cout << "Change the Price to = ";
+						cin >> NewPRICE;
+						break;
+					case 8: // NO MORE CHANGES
+						AddConfirmation = 'Y';
+						break;
+					}
+				} else {
+					cout << "\n*** INVALID INPUT ***\n";
+					cout << "Try Again: ";
+					cin >> AddConfirmation; }
+			}
 
-				PUBLISHER.push_back(NewPUBLISHER);
-
-				YEAR.push_back(NewYEAR);
-
-				PAGES.push_back(NewPAGES);
-
-				ORGPRICE.push_back(NewORGPRICE);
-
-
-
-
-
-
-			NeedSave = 1;			
+			NeedSave = 1;
 			AskAnotherOperation();
 			break;
 		case 4: // DELETE
@@ -230,7 +299,7 @@ int main() {
 		case 5: // UPDATE
 			// use this to update an element 
 				// vectorname.at((n-1)) = NewValue
-			NeedSave = 1;	
+			NeedSave = 1;
 			AskAnotherOperation();
 			break;
 
@@ -254,7 +323,8 @@ int main() {
 				aggregated = part1.append(part2.append(part3));
 				os << aggregated << endl;
 			}
-		} else { cout << "\n ERROR: Something went wrong with opening the file.\n"; }
+		}
+		else { cout << "\n ERROR: Something went wrong with opening the file.\n"; }
 	}
 }
 
@@ -272,7 +342,8 @@ void DisplayAllData() {
 		cout << setw(8) << right << PAGES.at(i);
 		cout << setw(20) << right << PUBLISHER.at(i);
 		cout << setw(8) << right << RETAILPRICE.at(i);
-		cout << endl; }
+		cout << endl;
+	}
 }
 void TableEnd() {
 	cout << "\n===================================================================================================================\n";
@@ -282,10 +353,25 @@ char AskAnotherOperation() {
 	cin >> AnotherOperation;
 	return AnotherOperation;
 }
+
+bool UniqueCheck (string NewISBN) {
+	bool IsUnique = 1;
+	vector<string>::iterator iterISBNunique;
+
+	int i = 0;
+	for (iterISBNunique = BOOKID.begin(); iterISBNunique != BOOKID.end(); ++iterISBNunique) {
+		if (BOOKID.at(i) == NewISBN) { 
+			IsUnique = 0; 
+			i++;
+		}
+	}
+	return IsUnique;
+}
+
 vector<int> searchWithinFunction(vector<string> vectorname) {
 	vector<int> IndexOfSearchedTerm;
 	vector<string>::iterator iter;
-	
+
 	string SearchTerm;
 	cout << " Type the term you want to search for: ";
 	cin >> SearchTerm;
