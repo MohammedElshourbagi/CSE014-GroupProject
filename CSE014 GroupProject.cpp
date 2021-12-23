@@ -83,7 +83,7 @@ int main() {
 	// Initialize Variables 
 
 	bool AddChangedData = 1;
-	int DeleteAtIndex, IDXDel;
+	int AtIndex, IDXDel, IDXUpd;
 	string SearchForBOOKID;
 	vector<string>::iterator iterID;
 
@@ -267,13 +267,12 @@ int main() {
 			break;
 
 		case 4: // DELETE
-			DeleteAtIndex = 0, IDXDel = 0;
-
+			AtIndex = 0, IDXDel = 0;
 			cout << " \n Enter the BOOKID = ";
 			cin >> SearchForBOOKID;
 			for (iterID = BOOKID.begin(); iterID != BOOKID.end(); ++iterID) {
-				if (BOOKID.at(DeleteAtIndex) == SearchForBOOKID) { IDXDel = DeleteAtIndex; }
-				DeleteAtIndex++;
+				if (BOOKID.at(AtIndex) == SearchForBOOKID) { IDXDel = AtIndex; }
+				AtIndex++;
 			}
 
 			TableHeader();
@@ -312,8 +311,42 @@ int main() {
 			break;
 
 		case 5: // UPDATE
-			// use this to update an element 
-				// vectorname.at((n-1)) = NewValue
+			cout << " \n Enter the BOOKID = ";
+			cin >> SearchForBOOKID;
+			AtIndex = 0, IDXUpd = 0;
+			for (iterID = BOOKID.begin(); iterID != BOOKID.end(); ++iterID) {
+				if (BOOKID.at(AtIndex) == SearchForBOOKID) { IDXUpd = AtIndex; }
+				AtIndex++;
+			}
+			TableHeader();
+			cout << setw(45) << left << TITLE.at(IDXUpd);
+			cout << setw(18) << right << AUTHOR.at(IDXUpd);
+			cout << setw(10) << right << GENRE.at(IDXUpd);
+			cout << setw(6) << right << YEAR.at(IDXUpd);
+			cout << setw(8) << right << PAGES.at(IDXUpd);
+			cout << setw(20) << right << PUBLISHER.at(IDXUpd);
+			cout << setw(8) << right << RETAILPRICE.at(IDXUpd);
+			TableEnd();
+
+			int UpdChoice;
+			cout << "\n\t 1: Change the Title? \n";
+			cout << "\n\t 2: Change the Author? \n";
+			cout << "\n\t 3: Change the Genre? \n";
+			cout << "\n\t 4: Change the Publisher? \n";
+			cout << "\n\t 5: Change the Year? \n";
+			cout << "\n\t 6: Change the Pages? \n";
+			cout << "\n\t 7: Change the Price? \n";
+			cout << "\n\t 8: No More Changes? \n";
+			cout << "\n Choice: ";
+			cin >> UpdChoice;
+			while ((UpdChoice <= 0) || (UpdChoice > 8)) {
+				cout << " INVALID INPUT\n";
+				cout << " Try Again : number must be between 1 to 8 \n";
+				cout << " \n Choice; ";
+				cin >> UpdChoice;
+			}
+			UpdateSwitch(UpdChoice);
+
 			NeedSave = 1;
 			AskAnotherOperation();
 			break;
