@@ -10,7 +10,6 @@ using namespace std;
 
 // Prototype functions are declared here
 void TableHeader();
-void DisplayAllData();
 void TableEnd();
 
 char AskAnotherOperation();
@@ -81,7 +80,6 @@ int main() {
 	else { cout << "\n Program will run with standard functions only\n"; }
 
 	// Initialize Variables 
-
 	bool AddChangedData = 1;
 	int AtIndex, IDXDel, IDXUpd;
 	string SearchForBOOKID;
@@ -142,6 +140,7 @@ int main() {
 				IndexOfSearchedTerm = searchWithinFunction(PUBLISHER);
 				break;
 			case 5: // Display a small MENU with a price range
+				int UpperBound, LowerBound;
 				cout << "\n\t 1: Price range of 0 to 15\n";
 				cout << "\n\t 2: Price range of 16 to 35\n";
 				cout << "\n\t 3: Price range of 36 to 50\n";
@@ -158,27 +157,52 @@ int main() {
 				}
 				switch (numberchoice) {
 				case 1:
-					break;
+					LowerBound = 0, UpperBound = 15; break;
 				case 2:
-					break;
+					LowerBound = 16, UpperBound = 35; break;
 				case 3:
-					break;
+					LowerBound = 36, UpperBound = 50; break;
 				case 4:
-					break;
+					LowerBound = 51, UpperBound = 75; break;
 				case 5:
-					break;
-				case 6:
-					break;
-
+					LowerBound = 76, UpperBound = 100; break;
+				case 6: 
+					LowerBound = 101, UpperBound = 100000; break;
 				}
+				int i = 0;
+				for (iterID = RETAILPRICE.begin(); iterID != RETAILPRICE.end(); ++iterID) {
+					if ((stof(RETAILPRICE.at(i)) >= LowerBound) && (stof(RETAILPRICE.at(i)) <= UpperBound)) {
+						IndexOfSearchedTerm.push_back(i);
+					} i++; }
 				break;
 			}
+			TableHeader();
+			for (int i = 0, j = 0; i <= (AmountOfBooks - 1); i++) {
+				if (IndexOfSearchedTerm.at(j) == i) {
+				cout << setw(45) << left << TITLE.at(i);
+				cout << setw(18) << right << AUTHOR.at(i);
+				cout << setw(10) << right << GENRE.at(i);
+				cout << setw(6) << right << YEAR.at(i);
+				cout << setw(8) << right << PAGES.at(i);
+				cout << setw(20) << right << PUBLISHER.at(i);
+				cout << setw(8) << right << RETAILPRICE.at(i);
+				cout << endl;
+				j++; } }
+			TableEnd();
 			AskAnotherOperation();
 			break;
 
 		case 2: // DISPLAY
 			TableHeader();
-			DisplayAllData();
+			for (int i = 0; i <= (AmountOfBooks - 1); i++) {
+				cout << setw(45) << left << TITLE.at(i);
+				cout << setw(18) << right << AUTHOR.at(i);
+				cout << setw(10) << right << GENRE.at(i);
+				cout << setw(6) << right << YEAR.at(i);
+				cout << setw(8) << right << PAGES.at(i);
+				cout << setw(20) << right << PUBLISHER.at(i);
+				cout << setw(8) << right << RETAILPRICE.at(i);
+				cout << endl; }
 			TableEnd();
 			AskAnotherOperation();
 			break;
@@ -381,18 +405,6 @@ void TableHeader() {
 	cout << "\n                   Title                    |      Author      |  Genre  | Year | #Pages |    Publisher    | Price ";
 	cout << "\n--------------------------------------------+------------------+---------+------+--------+-----------------+-------\n";
 }
-void DisplayAllData() {
-	for (int i = 0; i <= (AmountOfBooks - 1); i++) {
-		cout << setw(45) << left << TITLE.at(i);
-		cout << setw(18) << right << AUTHOR.at(i);
-		cout << setw(10) << right << GENRE.at(i);
-		cout << setw(6) << right << YEAR.at(i);
-		cout << setw(8) << right << PAGES.at(i);
-		cout << setw(20) << right << PUBLISHER.at(i);
-		cout << setw(8) << right << RETAILPRICE.at(i);
-		cout << endl;
-	}
-}
 void TableEnd() {
 	cout << "\n===================================================================================================================\n";
 }
@@ -467,3 +479,4 @@ vector<int> searchWithinFunction(vector<string> vectorname) {
 	}
 	return IndexOfSearchedTerm;
 }
+
