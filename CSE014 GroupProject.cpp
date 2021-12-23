@@ -278,8 +278,7 @@ int main() {
 						cin >> AddChoice;
 					}
 					UpdateSwitch(AddChoice);
-				}
-				else {
+				} else {
 					cout << "\n\t*** INVALID INPUT ***\n";
 					cout << " Try Again (Y/N): ";
 					cin >> ConfirmationCheck;
@@ -366,7 +365,7 @@ int main() {
 			while ((UpdChoice <= 0) || (UpdChoice > 8)) {
 				cout << " INVALID INPUT\n";
 				cout << " Try Again : number must be between 1 to 8 \n";
-				cout << " \n Choice; ";
+				cout << "\n Choice; ";
 				cin >> UpdChoice;
 			}
 			UpdateSwitch(UpdChoice);
@@ -376,7 +375,27 @@ int main() {
 			break;
 
 		case 6: // ORGANIZE SALE
-			// Something like 20& off for all fantasy books 
+			int SaleChoice, PercentOff;
+			float Percentage;
+			cout << "\n\t 1: A new sale by Genre\n";
+			cout << "\n\t 2: A new sale by Author\n";
+			cout << "\n\t 3: A new sale by Publisher\n";
+			cout << "\n Choice = ";
+			cin >> SaleChoice;
+			cout << " State the percentage discount = ";
+			cin >> PercentOff;
+			Percentage = 1 - (PercentOff / 100);
+			switch (SaleChoice) {
+			case 1: IndexOfSearchedTerm = searchWithinFunction(GENRE); break;
+			case 2: IndexOfSearchedTerm = searchWithinFunction(AUTHOR); break;
+			case 3: IndexOfSearchedTerm = searchWithinFunction(PUBLISHER); break;
+			}
+			for (int i = 0, j = 0; i <= (AmountOfBooks - 1); i++) {
+				if (IndexOfSearchedTerm.at(j) == i) {
+					RETAILPRICE.at(i) = to_string(Percentage*stof(RETAILPRICE.at(i)));
+					j++; 
+				} 
+			}
 			NeedSave = 1;
 			AskAnotherOperation();
 			break;
@@ -479,4 +498,3 @@ vector<int> searchWithinFunction(vector<string> vectorname) {
 	}
 	return IndexOfSearchedTerm;
 }
-
