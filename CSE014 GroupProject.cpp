@@ -81,7 +81,6 @@ int main() {
 	else { cout << "\n Program will run with standard functions only\n"; }
 
 	// Initialize Variables 
-
 	bool AddChangedData = 1;
 	int AtIndex, IDXDel, IDXUpd;
 	string SearchForBOOKID;
@@ -142,6 +141,7 @@ int main() {
 				IndexOfSearchedTerm = searchWithinFunction(PUBLISHER);
 				break;
 			case 5: // Display a small MENU with a price range
+				int UpperBound, LowerBound;
 				cout << "\n\t 1: Price range of 0 to 15\n";
 				cout << "\n\t 2: Price range of 16 to 35\n";
 				cout << "\n\t 3: Price range of 36 to 50\n";
@@ -169,7 +169,6 @@ int main() {
 					break;
 				case 6:
 					break;
-
 				}
 				break;
 			}
@@ -467,3 +466,4 @@ vector<int> searchWithinFunction(vector<string> vectorname) {
 	}
 	return IndexOfSearchedTerm;
 }
+
