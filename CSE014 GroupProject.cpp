@@ -5,8 +5,6 @@
 #include <sstream>	    
 #include <string>		
 #include <vector>	
-#include <stdio.h>
-#include <sqlite3.h>
 using namespace std;
 
 // Prototype functions are declared here
