@@ -4,33 +4,31 @@
 #include <fstream>		
 #include <sstream>	    
 #include <string>		
-#include <algorithm>
 #include <vector>	
 using namespace std;
 
 // Prototype functions are declared here
 void TableHeader();
 void TableEnd();
-
 char AskAnotherOperation();
 void UpdateSwitch(int AddChoice);
 bool UniqueCheck(string NewISBN);
 vector<int> searchWithinFunction(vector<string> vectorname);
 
-// Global Variables // Done to make effective use of functions 
+// Global Variables: Done to make effective use of functions 
 int AmountOfBooks = 0;
 char AnotherOperation = 'Y', ConfirmationCheck;
 
 // Vectors containing all the info on the books 
 vector<string> BOOKID, TITLE, AUTHOR, GENRE, PUBLISHER, YEAR, PAGES, ORGPRICE, RETAILPRICE, ISBN;
 string NewBOOKID, NewTITLE, NewAUTHOR, NewGENRE, NewPUBLISHER, NewYEAR, NewPAGES, NewPRICE, NewISBN;
-vector<int> IndexOfSearchedTerm; // Used in Query 
+vector<int> IndexOfSearchedTerm; // Used in Querysearch
 
 int main() {
-	cout << " This is program manages and maintain a database of books in a library.";
-	// All data stored in text file is assinged to the vectors used in the program
-	// This allows us to manipulate the data more easily
-	fstream ifs("BookData.txt");
+	cout << " This is program manages and maintain a database of books in a library."; // Preface
+	/* All data stored in text file is assinged to the vectors used in the program
+	   This allows us to manipulate the data more easily */
+	fstream ifs("BookData.txt"); // Reads the TextFile 
 	if (ifs.is_open()) {
 		for (string atLineRead; getline(ifs, atLineRead);) {
 			stringstream unprocessedLine(atLineRead);
@@ -52,9 +50,8 @@ int main() {
 			}
 			AmountOfBooks++;
 		}
-	}
-	else { cout << "\n ERROR: Something went wrong with openining the file\n"; }
-	bool NeedSave = 0; // Did the content of file change?, if it did then save
+	} else { cout << "\n ERROR: Something went wrong with openining the file\n"; }
+	bool NeedSave = 0; // Did the content of file change?, if it did, then save
 
 	int PassodeEntered, Passcode = 123;
 	bool isAdmin = 0;
@@ -64,20 +61,15 @@ int main() {
 	if (RunAsAdmin == 'Y') {
 		cout << " Enter Admins Code = ";
 		cin >> PassodeEntered;
-		if (PassodeEntered == Passcode) {
-			isAdmin = 1;
-		}
+		if (PassodeEntered == Passcode) { isAdmin = 1; }
 		else {
 			int Attempts = 3;
 			while ((PassodeEntered != Passcode) && (Attempts > 0)) {
 				cout << " Incorrect Password: You have " << Attempts << " arrempts left = ";
 				cin >> PassodeEntered;
 				Attempts--;
-			}
-			if (Attempts == 0) { cout << "\n Program will run with standard functions only\n"; }
-		}
-	}
-	else { cout << "\n Program will run with standard functions only\n"; }
+			} if (Attempts == 0) { cout << "\n Program will run with standard functions only\n"; } }
+	} else { cout << "\n Program will run with standard functions only\n"; }
 
 	// Initialize Variables 
 	bool AddChangedData = 1;
@@ -118,6 +110,7 @@ int main() {
 			cout << "\n\t 3: Search by Genre \n";
 			cout << "\n\t 4: Search by Publisher \n";
 			cout << "\n\t 5: Search by Price \n";
+
 			cout << " Choice: ";
 			cin >> querychoice;
 			while ((querychoice <= 0) || (querychoice > 7)) {
@@ -126,20 +119,13 @@ int main() {
 				cout << " \n Choice; ";
 				cin >> querychoice;
 			}
-			switch (querychoice) {
-			case 1: // Checks the TITLE vector if it contains the search term 
-				IndexOfSearchedTerm = searchWithinFunction(TITLE);
-				break;
-			case 2: // Checks the AUTHOR vector if it contains the search term 
-				IndexOfSearchedTerm = searchWithinFunction(AUTHOR);
-				break;
-			case 3: // Checks the GENRE vector if it contains the search term
-				IndexOfSearchedTerm = searchWithinFunction(GENRE);
-				break;
-			case 4: // Checks the Publisher vector if it contains the search term
-				IndexOfSearchedTerm = searchWithinFunction(PUBLISHER);
-				break;
-			case 5: // Display a small MENU with a price range
+
+			switch (querychoice) { // Checks the vector if it contains the search term
+			case 1: IndexOfSearchedTerm = searchWithinFunction(TITLE); break;
+			case 2: IndexOfSearchedTerm = searchWithinFunction(AUTHOR); break;
+			case 3: IndexOfSearchedTerm = searchWithinFunction(GENRE); break;
+			case 4: IndexOfSearchedTerm = searchWithinFunction(PUBLISHER); break;
+			case 5: // Displays a small MENU with a price range
 				int UpperBound, LowerBound;
 				cout << "\n\t 1: Price range of 0 to 15\n";
 				cout << "\n\t 2: Price range of 16 to 35\n";
@@ -147,6 +133,7 @@ int main() {
 				cout << "\n\t 4: Price range of 51 to 75\n";
 				cout << "\n\t 5: Price range of 76 to 100\n";
 				cout << "\n\t 6: Price range of bigger than 100 \n";
+
 				int numberchoice;
 				cout << "Choice: ";
 				cin >> numberchoice;
@@ -155,40 +142,42 @@ int main() {
 					cout << "Try Again : number must be between 1 to 6 \n";
 					cin >> numberchoice;
 				}
+
 				switch (numberchoice) {
-				case 1:
-					LowerBound = 0, UpperBound = 15; break;
-				case 2:
-					LowerBound = 16, UpperBound = 35; break;
-				case 3:
-					LowerBound = 36, UpperBound = 50; break;
-				case 4:
-					LowerBound = 51, UpperBound = 75; break;
-				case 5:
-					LowerBound = 76, UpperBound = 100; break;
-				case 6: 
-					LowerBound = 101, UpperBound = 100000; break;
+				case 1: LowerBound = 0, UpperBound = 15; break;
+				case 2: LowerBound = 16, UpperBound = 35; break;
+				case 3: LowerBound = 36, UpperBound = 50; break;
+				case 4: LowerBound = 51, UpperBound = 75; break;
+				case 5: LowerBound = 76, UpperBound = 100; break;
+				case 6: LowerBound = 101, UpperBound = 100000; break;
 				}
+
 				int i = 0;
 				for (iterID = RETAILPRICE.begin(); iterID != RETAILPRICE.end(); ++iterID) {
 					if ((stof(RETAILPRICE.at(i)) >= LowerBound) && (stof(RETAILPRICE.at(i)) <= UpperBound)) {
 						IndexOfSearchedTerm.push_back(i);
-					} i++; }
+					} i++;
+				}
 				break;
 			}
-			TableHeader();
-			for (int i = 0, j = 0; i <= (AmountOfBooks - 1); i++) {
-				if (IndexOfSearchedTerm.at(j) == i) {
-				cout << setw(45) << left << TITLE.at(i);
-				cout << setw(18) << right << AUTHOR.at(i);
-				cout << setw(10) << right << GENRE.at(i);
-				cout << setw(6) << right << YEAR.at(i);
-				cout << setw(8) << right << PAGES.at(i);
-				cout << setw(20) << right << PUBLISHER.at(i);
-				cout << setw(8) << right << RETAILPRICE.at(i);
-				cout << endl;
-				j++; } }
-			TableEnd();
+			if (!IndexOfSearchedTerm.empty()) {
+				TableHeader();
+				for (int i = 0, j = 0; i <= (AmountOfBooks - 1); i++) {
+					if (IndexOfSearchedTerm.at(j) == i) {
+						cout << setw(45) << left << TITLE.at(i);
+						cout << setw(18) << right << AUTHOR.at(i);
+						cout << setw(10) << right << GENRE.at(i);
+						cout << setw(6) << right << YEAR.at(i);
+						cout << setw(8) << right << PAGES.at(i);
+						cout << setw(20) << right << PUBLISHER.at(i);
+						cout << setw(8) << right << RETAILPRICE.at(i);
+						cout << endl;
+						j++;
+					}
+				}
+				TableEnd();
+			}
+			else { cout << "\t * Search term not found * "; }
 			AskAnotherOperation();
 			break;
 
@@ -202,7 +191,8 @@ int main() {
 				cout << setw(8) << right << PAGES.at(i);
 				cout << setw(20) << right << PUBLISHER.at(i);
 				cout << setw(8) << right << RETAILPRICE.at(i);
-				cout << endl; }
+				cout << endl;
+			}
 			TableEnd();
 			AskAnotherOperation();
 			break;
@@ -278,7 +268,8 @@ int main() {
 						cin >> AddChoice;
 					}
 					UpdateSwitch(AddChoice);
-				} else {
+				}
+				else {
 					cout << "\n\t*** INVALID INPUT ***\n";
 					cout << " Try Again (Y/N): ";
 					cin >> ConfirmationCheck;
@@ -392,9 +383,9 @@ int main() {
 			}
 			for (int i = 0, j = 0; i <= (AmountOfBooks - 1); i++) {
 				if (IndexOfSearchedTerm.at(j) == i) {
-					RETAILPRICE.at(i) = to_string(Percentage*stof(RETAILPRICE.at(i)));
-					j++; 
-				} 
+					RETAILPRICE.at(i) = to_string(Percentage * stof(RETAILPRICE.at(i)));
+					j++;
+				}
 			}
 			NeedSave = 1;
 			AskAnotherOperation();
@@ -413,10 +404,7 @@ int main() {
 				part3 = PAGES.at(i) + "|" + ORGPRICE.at(i) + "|" + RETAILPRICE.at(i) + "|" + ISBN.at(i);
 				aggregated = part1.append(part2.append(part3));
 				os << aggregated << endl;
-			}
-		}
-		else { cout << "\n ERROR: Something went wrong with opening the file.\n"; }
-	}
+			} } else { cout << "\n ERROR: Something went wrong with opening the file.\n"; } }
 }
 
 void TableHeader() {
@@ -424,9 +412,10 @@ void TableHeader() {
 	cout << "\n                   Title                    |      Author      |  Genre  | Year | #Pages |    Publisher    | Price ";
 	cout << "\n--------------------------------------------+------------------+---------+------+--------+-----------------+-------\n";
 }
-void TableEnd() {
-	cout << "\n===================================================================================================================\n";
+void TableEnd() { 
+	cout << "\n===================================================================================================================\n"; 
 }
+
 char AskAnotherOperation() {
 	cout << "\n Perform another operation? (Y/N) = ";
 	cin >> AnotherOperation;
