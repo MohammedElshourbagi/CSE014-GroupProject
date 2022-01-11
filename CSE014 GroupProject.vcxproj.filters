@@ -18,5 +18,11 @@
     <ClCompile Include="CSE014 GroupProject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SQlite\sqlite-amalgamation-3370100\sqlite3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
